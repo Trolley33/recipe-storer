@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
 
 
     @Override
@@ -26,6 +26,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                searchPressed();
+                break;
+            case R.id.help:
+                helpPressed();
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    void searchPressed() {
+        Toast.makeText(this, "Search pressed.", Toast.LENGTH_SHORT).show();
+    }
+
+    void helpPressed() {
+        Toast.makeText(this, "Help pressed.", Toast.LENGTH_SHORT).show();
     }
 }
