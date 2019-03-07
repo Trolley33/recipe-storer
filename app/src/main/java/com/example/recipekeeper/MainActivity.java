@@ -5,17 +5,23 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
+    DBHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Setup action bar
         Toolbar toolbar = findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
+
+        // Setup database
+        myDB = new DBHelper(this);
     }
 
     @Override
@@ -44,5 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
     void helpPressed() {
         Toast.makeText(this, "Help pressed.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void addTestRecipe(View v)
+    {
+
+        Boolean r = myDB.createNewRecipe("Lemon Gnocchi", "");
+        Toast.makeText(this, r.toString(), Toast.LENGTH_SHORT).show();
     }
 }
