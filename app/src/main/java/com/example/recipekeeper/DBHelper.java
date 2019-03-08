@@ -2,6 +2,7 @@ package com.example.recipekeeper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -9,18 +10,25 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_NAME = "recipe.db";
+    public enum FILTER {ALL, FAVOURITES};
 
 
     DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, 3);
+        super(context, DATABASE_NAME, null, 4);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE recipes (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, OVERVIEW TEXT)");
+        db.execSQL("CREATE TABLE recipes (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, OVERVIEW TEXT, FAVOURITE INT)");
+
         db.execSQL("CREATE TABLE ingredients (ID INTEGER PRIMARY KEY AUTOINCREMENT, RECIPE_ID INT, DESCRIPTION TEXT, AMOUNT TEXT)");
+
         db.execSQL("CREATE TABLE methods (ID INTEGER PRIMARY KEY AUTOINCREMENT, RECIPE_ID INT, POSITION INT, STEP TEXT, TIME REAL)");
+
+        db.execSQL("CREATE TABLE categories (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT)");
+
+        db.execSQL("CREATE TABLE recipe_category (ID INTEGER PRIMARY KEY AUTOINCREMENT, RECIPE_ID INT, CATEGORY_ID INT)");
     }
 
     @Override
@@ -28,6 +36,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS recipes");
         db.execSQL("DROP TABLE IF EXISTS ingredients");
         db.execSQL("DROP TABLE IF EXISTS methods");
+        db.execSQL("DROP TABLE IF EXISTS categories");
+        db.execSQL("DROP TABLE IF EXISTS recipe_category");
         onCreate(db);
     }
 
@@ -40,5 +50,20 @@ public class DBHelper extends SQLiteOpenHelper {
         long result = db.insert("recipes", null, contentValues);
 
         return result != -1;
+    }
+
+    public Cursor getRecipeList(Enum filter)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (filter == FILTER.ALL)
+        {
+            return db.rawQuery("SELECT * FROM recipes", null);
+        }
+        if (filter == FILTER.FAVOURITES)
+        {
+            return db.rawQuery("SELECT * FROM recipes WHERE FAVOURITE='1'", null);
+        }
+
+        return null;
     }
 }
