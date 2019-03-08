@@ -14,15 +14,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, 4);
+        super(context, DATABASE_NAME, null, 7);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE recipes (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, OVERVIEW TEXT, FAVOURITE INT)");
+        db.execSQL("CREATE TABLE recipes (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, OVERVIEW TEXT, FAVOURITE INT, POSITION INT)");
 
-        db.execSQL("CREATE TABLE ingredients (ID INTEGER PRIMARY KEY AUTOINCREMENT, RECIPE_ID INT, DESCRIPTION TEXT, AMOUNT TEXT)");
+        db.execSQL("CREATE TABLE ingredients (ID INTEGER PRIMARY KEY AUTOINCREMENT, RECIPE_ID INT, DESCRIPTION TEXT, AMOUNT TEXT, POSITION INT)");
 
         db.execSQL("CREATE TABLE methods (ID INTEGER PRIMARY KEY AUTOINCREMENT, RECIPE_ID INT, POSITION INT, STEP TEXT, TIME REAL)");
 
@@ -57,13 +57,20 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         if (filter == FILTER.ALL)
         {
-            return db.rawQuery("SELECT * FROM recipes", null);
+            return db.rawQuery("SELECT * FROM recipes ORDER BY POSITION", null);
         }
         if (filter == FILTER.FAVOURITES)
         {
-            return db.rawQuery("SELECT * FROM recipes WHERE FAVOURITE='1'", null);
+            return db.rawQuery("SELECT * FROM recipes WHERE FAVOURITE='1' ORDER BY POSITION", null);
         }
 
         return null;
+    }
+
+    public void updateRecipe(int id, String name, String overview, int favourite, int position)
+    {
+        SQLiteDatabase db  = this.getWritableDatabase();
+
+        db.execSQL("UPDATE recipes SET NAME=?, OVERVIEW=?, FAVOURITE=?, POSITION=? WHERE ID=?", new Object[] {name, overview, favourite, position, id});
     }
 }
