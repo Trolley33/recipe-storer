@@ -96,10 +96,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         RecyclerView recyclerView = findViewById(R.id.recipe_list);
-        for (String rec : recipeList)
-        {
-            recyclerView.
-        }
 
     }
 
