@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void searchPressed() {
-        Toast.makeText(this, "Search pressed.", Toast.LENGTH_SHORT).show();
+        showMessage("TODO", "Run search function.");
     }
 
     void helpPressed() {
-        Toast.makeText(this, "Help pressed.", Toast.LENGTH_SHORT).show();
+        showMessage("TODO", "Run help function.");
     }
 
     /**
