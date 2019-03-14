@@ -22,26 +22,6 @@ public class Recipe {
         position = _pos;
     }
 
-    public static Recipe getDummyRecipe()
-    {
-        return getDummyRecipe(DBHelper.FILTER.ALL);
-    }
-
-    public static Recipe getDummyRecipe(DBHelper.FILTER filter)
-    {
-        if (filter.equals(DBHelper.FILTER.ALL))
-        {
-            return new Recipe(200, "Dummy Recipe", "Dummy overview", 0, 5);
-        }
-
-        if (filter.equals(DBHelper.FILTER.FAVOURITES))
-        {
-            return new Recipe(200, "Favourite Recipe", "Dummy overview", 1, 5);
-        }
-
-        return null;
-    }
-
     public int getID()
     {
         return id;
