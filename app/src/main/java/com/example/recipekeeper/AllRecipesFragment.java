@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -70,7 +72,7 @@ public class AllRecipesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
         Context context = view.getContext();
 
         // Set the adapter
@@ -96,7 +98,42 @@ public class AllRecipesFragment extends Fragment {
         refreshRecipes(view);
         adapter.notifyDataSetChanged();
 
+        attachItemTouchHelper();
+
         return view;
+    }
+
+    void attachItemTouchHelper ()
+    {
+        // Extend the Callback class
+        ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
+            // When an item is dragged and dropped.
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                // Swap dragged item and target item.
+                recipeList.get(viewHolder.getAdapterPosition()).setPosition(target.getAdapterPosition());
+                recipeList.get(target.getAdapterPosition()).setPosition(viewHolder.getAdapterPosition());
+
+                Collections.swap(recipeList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+
+                // Notify adapter to change positions.
+                adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                //TODO
+            }
+
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                        ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+            }
+        };
+        // Create an `ItemTouchHelper` and attach it to the `RecyclerView`
+        ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
+        ith.attachToRecyclerView(recyclerView);
     }
 
     void refreshRecipes(View view)

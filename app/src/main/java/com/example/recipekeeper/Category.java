@@ -26,6 +26,19 @@ public class Category {
         return name;
     }
 
+    public int getRecipeCount()
+    {
+        Cursor res = db.getCategoryRecipeList(id);
+
+        if (res == null)
+        {
+            return 0;
+        }
+
+        return res.getCount();
+
+    }
+
     public static void addNew(String name)
     {
         db.createNewCategory(name);

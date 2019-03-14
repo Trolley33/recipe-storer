@@ -47,9 +47,20 @@ public class Recipe {
         return position;
     }
 
+    public void toggleFavourite ()
+    {
+        favourite = !favourite;
+        updateRecipe();
+    }
+
     public void setPosition(int _pos)
     {
         position = _pos;
+        updateRecipe();
+    }
+
+    void updateRecipe ()
+    {
         db.updateRecipe(getID(), getName(), getOverview(), isFavourite() ? 1 : 0, getPosition());
     }
 

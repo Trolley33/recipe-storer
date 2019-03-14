@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, 7);
+        super(context, DATABASE_NAME, null, 8);
     }
 
     /**
@@ -106,6 +106,16 @@ public class DBHelper extends SQLiteOpenHelper {
         db.update("recipes", contentValues, "ID="+id, null);
     }
 
+    public Cursor getCategoryRecipeList (int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("" +
+                "SELECT * FROM categories " +
+                "JOIN recipe_category " +
+                "ON (recipe_category.CATEGORY_ID = categories.ID) " +
+                "WHERE categories.ID="+id,
+                null);
+    }
 
     boolean createNewCategory(String name)
     {

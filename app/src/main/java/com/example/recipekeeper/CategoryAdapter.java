@@ -8,10 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>
 {
+    private List<Category> categories;
+
+    public CategoryAdapter(List<Category> _categories)
+    {
+        categories = _categories;
+    }
+
     @NonNull
     @Override
     public CategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
@@ -28,8 +37,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder viewHolder, int i) {
         Category category = categories.get(i);
 
-        TextView textView = viewHolder.nameTextView;
-        textView.setText(category.getName());
+        TextView nameTextView = viewHolder.nameTextView;
+        TextView countTextView = viewHolder.countTextView;
+
+        nameTextView.setText(category.getName());
+        countTextView.setText(String.format("%d Recipes", category.getRecipeCount()));
     }
 
     @Override
@@ -37,20 +49,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return categories.size();
     }
 
-    private List<Category> categories;
-
-    public CategoryAdapter(List<Category> _categories)
-    {
-        categories = _categories;
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
+        TextView countTextView;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.category_name);
+            countTextView = (TextView) itemView.findViewById(R.id.category_count);
         }
     }
 }

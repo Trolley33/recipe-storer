@@ -28,7 +28,7 @@ public class CategoryFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 3;
+    private int mColumnCount = 1;
 
     private RecyclerView recyclerView;
     private List<Category> categoryList;
@@ -61,15 +61,13 @@ public class CategoryFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_category_list, container, false);
         Context context = view.getContext();
 
         // Set the adapter
@@ -81,7 +79,7 @@ public class CategoryFragment extends Fragment {
         {
             recyclerView = view.findViewById(R.id.recipe_list);
         }
-        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
