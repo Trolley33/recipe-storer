@@ -56,6 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         myDB = new DBHelper(this);
         // Give all models a reference to the database.
         Recipe.db = myDB;
+        Category.db = myDB;
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -171,11 +172,11 @@ public class HomeActivity extends AppCompatActivity {
                 case 0:
                     return new AllRecipesFragment();
                 case 1:
-                    return PlaceholderFragment.newInstance(position + 1);
+                    return new CategoryFragment();
                 case 2:
                     return new FavRecipesFragment();
             }
-            return PlaceholderFragment.newInstance(position + 1);
+            return null;
         }
 
         @Override

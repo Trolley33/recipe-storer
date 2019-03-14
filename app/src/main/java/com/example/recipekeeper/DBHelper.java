@@ -105,4 +105,22 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("POSITION", position);
         db.update("recipes", contentValues, "ID="+id, null);
     }
+
+
+    boolean createNewCategory(String name)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NAME", name);
+        long result = db.insert("categories", null, contentValues);
+
+        return result != -1;
+    }
+
+    public Cursor getCategoryList()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM categories ORDER BY NAME", null);
+
+    }
 }
