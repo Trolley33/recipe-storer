@@ -58,10 +58,22 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     boolean createNewRecipe(String name, String overview)
     {
+        return createNewRecipe(name, overview, 0);
+    }
+    /**
+     * When a new recipe is created (from the homescreen)
+     * @param name of recipe
+     * @param overview if supplied (usually blank).
+     * @param fav if recipe is a favourite.
+     * @return if row was inserted correctly.
+     */
+    boolean createNewRecipe(String name, String overview, int fav)
+    {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("NAME", name);
         contentValues.put("OVERVIEW", "");
+        contentValues.put("FAVOURITE", fav);
         long result = db.insert("recipes", null, contentValues);
 
         return result != -1;

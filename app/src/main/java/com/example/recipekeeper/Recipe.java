@@ -22,6 +22,26 @@ public class Recipe {
         position = _pos;
     }
 
+    public static Recipe getDummyRecipe()
+    {
+        return getDummyRecipe(DBHelper.FILTER.ALL);
+    }
+
+    public static Recipe getDummyRecipe(DBHelper.FILTER filter)
+    {
+        if (filter.equals(DBHelper.FILTER.ALL))
+        {
+            return new Recipe(200, "Dummy Recipe", "Dummy overview", 0, 5);
+        }
+
+        if (filter.equals(DBHelper.FILTER.FAVOURITES))
+        {
+            return new Recipe(200, "Favourite Recipe", "Dummy overview", 1, 5);
+        }
+
+        return null;
+    }
+
     public int getID()
     {
         return id;
@@ -51,6 +71,16 @@ public class Recipe {
     {
         position = _pos;
         db.updateRecipe(getID(), getName(), getOverview(), isFavourite() ? 1 : 0, getPosition());
+    }
+
+    public static void addNew(String name, String overview)
+    {
+        db.createNewRecipe(name, overview, 0);
+    }
+
+    public static void addNew(String name, String overview, int fav)
+    {
+        db.createNewRecipe(name, overview, fav);
     }
 
     public static ArrayList<Recipe> getRecipeList(Enum filter)
