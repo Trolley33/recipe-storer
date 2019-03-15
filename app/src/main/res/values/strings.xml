@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Recipe Storer</string>
     <string name="action_settings">Settings</string>
-    <string name="tab_text_1">All</string>
-    <string name="tab_text_2">Category</string>
-    <string name="tab_text_3">Favourites</string>
+    <string name="home_tab_all">All</string>
+    <string name="home_tab_category">Category</string>
+    <string name="home_tab_favourite">Favourites</string>
+    <string name="title_activity_recipe">Recipe Viewer</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

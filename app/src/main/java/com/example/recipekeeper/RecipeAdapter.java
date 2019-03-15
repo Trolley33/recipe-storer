@@ -1,13 +1,16 @@
 package com.example.recipekeeper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,12 +39,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipeAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final RecipeAdapter.ViewHolder viewHolder, int i) {
         final Recipe recipe = recipes.get(i);
 
         TextView textView = viewHolder.nameTextView;
         textView.setText(recipe.getName());
         Button favouriteButton = viewHolder.favouriteButton;
+        ConstraintLayout layout = viewHolder.layout;
+        final Context context = viewHolder.context;
+
         if (recipe.isFavourite())
         {
             favouriteButton.setBackgroundResource(R.drawable.ic_baseline_star_24px);
@@ -58,6 +64,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 notifyItemChanged(recipe.getPosition());
             }
         });
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RecipeViewActivity.class);
+
+                intent.putExtra(HomeActivity.RECIPE_ID_MESSAGE, recipe.getID());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -66,12 +82,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout layout;
         TextView nameTextView;
         Button favouriteButton;
+        Context context;
 
         public ViewHolder(final View itemView) {
 
             super(itemView);
+            context = itemView.getContext();
+            layout = (ConstraintLayout) itemView.findViewById(R.id.layout);
             nameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
             favouriteButton = (Button) itemView.findViewById(R.id.fav_button);
         }

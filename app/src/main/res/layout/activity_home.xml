@@ -33,19 +33,19 @@
                 android:id="@+id/all_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tab_text_1" />
+                android:text="@string/home_tab_all" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/cat_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tab_text_2" />
+                android:text="@string/home_tab_category" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/fav_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tab_text_3" />
+                android:text="@string/home_tab_favourite" />
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>

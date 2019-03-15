@@ -24,9 +24,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class RecipeViewActivity extends AppCompatActivity
+{
 
-    public static final String RECIPE_ID_MESSAGE = "com.example.recipekeeper.extra.RECIPE_ID";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
