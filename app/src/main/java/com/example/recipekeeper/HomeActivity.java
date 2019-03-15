@@ -48,9 +48,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // Setup database
         myDB = new DBHelper(this);
-        // Give all models a reference to the database.
-        Recipe.db = myDB;
-        Category.db = myDB;
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

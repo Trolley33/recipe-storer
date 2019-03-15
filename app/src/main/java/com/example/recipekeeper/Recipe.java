@@ -2,7 +2,9 @@ package com.example.recipekeeper;
 
 import android.database.Cursor;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Recipe {
     private int id;
@@ -10,6 +12,8 @@ public class Recipe {
     private String overview;
     private boolean favourite;
     private int position;
+
+    private ArrayList<Category> categories;
 
     static DBHelper db;
 
@@ -20,6 +24,23 @@ public class Recipe {
         overview = _overview;
         favourite = (_fav == 1);
         position = _pos;
+        categories = initCategories();
+    }
+
+    private ArrayList<Category> initCategories()
+    {
+        ArrayList<Category> output = new ArrayList<>();
+        Cursor res = db.getCategoryRecipeList();
+
+        while (res.moveToNext())
+        {
+            int recipe_id = res.getInt(3);
+            int cat_id = res.getInt(0);
+            if (id == recipe_id)
+                output.add(Category.getFromID(cat_id));
+        }
+
+        return output;
     }
 
     public int getID()
@@ -45,6 +66,11 @@ public class Recipe {
     public int getPosition()
     {
         return position;
+    }
+
+    public ArrayList<Category> getCategories ()
+    {
+        return categories;
     }
 
     public void toggleFavourite ()
@@ -101,5 +127,17 @@ public class Recipe {
 
 
         return recipes;
+    }
+
+    public static Recipe getFromID (int _id)
+    {
+        for (Recipe r : getRecipeList(DBHelper.FILTER.ALL))
+        {
+            if (r.getID() == _id)
+            {
+                return r;
+            }
+        }
+        return null;
     }
 }

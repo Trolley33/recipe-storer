@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.logging.Filter;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_NAME = "recipe.db";
@@ -14,9 +17,10 @@ public class DBHelper extends SQLiteOpenHelper {
     // For filtering favourites on the main screen.
     public enum FILTER {ALL, FAVOURITES};
 
-
     DBHelper(Context context) {
         super(context, DATABASE_NAME, null, 8);
+        Recipe.db = this;
+        Category.db = this;
     }
 
     /**
@@ -106,17 +110,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.update("recipes", contentValues, "ID="+id, null);
     }
 
-    public Cursor getCategoryRecipeList (int id)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("" +
-                "SELECT * FROM categories " +
-                "JOIN recipe_category " +
-                "ON (recipe_category.CATEGORY_ID = categories.ID) " +
-                "WHERE categories.ID="+id,
-                null);
-    }
-
     boolean createNewCategory(String name)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -131,6 +124,17 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM categories ORDER BY NAME", null);
+    }
 
+    public Cursor getCategoryRecipeList ()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("" +
+                        "SELECT categories.ID as cID, categories.NAME as cName, recipes.ID as rID, recipes.NAME as rName FROM categories " +
+                        "JOIN recipe_category " +
+                        "ON (recipe_category.CATEGORY_ID = categories.ID) " +
+                        "JOIN recipes " +
+                        "ON (recipe_category.RECIPE_ID = recipes.ID) ",
+                null);
     }
 }

@@ -4,6 +4,10 @@
     <string name="home_tab_all">All</string>
     <string name="home_tab_category">Category</string>
     <string name="home_tab_favourite">Favourites</string>
+
     <string name="title_activity_recipe">Recipe Viewer</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="recipe_tab_overview">Overview</string>
+    <string name="recipe_tab_ingredients">Ingredients</string>
+    <string name="recipe_tab_method">Method</string>
+
 </resources>

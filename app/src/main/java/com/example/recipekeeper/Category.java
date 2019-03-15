@@ -28,15 +28,22 @@ public class Category {
 
     public int getRecipeCount()
     {
-        Cursor res = db.getCategoryRecipeList(id);
+        Cursor res = db.getCategoryRecipeList();
 
         if (res == null)
         {
             return 0;
         }
 
-        return res.getCount();
+        int total = 0;
+        while (res.moveToNext())
+        {
+            int cat_id = res.getInt(0);
+            if (id == cat_id)
+                total++;
+        }
 
+        return total;
     }
 
     public static void addNew(String name)
@@ -67,5 +74,18 @@ public class Category {
         }
 
         return categories;
+    }
+
+    public static Category getFromID (int _id)
+    {
+        for (Category c : getCategoryList())
+        {
+            if (c.getID() == _id)
+            {
+                return c;
+            }
+        }
+
+        return null;
     }
 }

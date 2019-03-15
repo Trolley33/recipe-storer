@@ -1,5 +1,6 @@
 package com.example.recipekeeper;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,7 +28,6 @@ import java.util.List;
 public class RecipeViewActivity extends AppCompatActivity
 {
 
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -35,22 +35,22 @@ public class RecipeViewActivity extends AppCompatActivity
      */
     private ViewPager mViewPager;
 
-    DBHelper myDB;
+    Recipe selectedRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_recipe_viewer);
+
+        Intent intent = getIntent();
+        int id = Integer.parseInt(intent.getExtras().get(HomeActivity.RECIPE_ID_MESSAGE).toString());
+
+        selectedRecipe = Recipe.getFromID(id);
 
         // Setup action bar
         Toolbar toolbar = findViewById(R.id.action_bar);
+        toolbar.setTitle(selectedRecipe.getName());
         setSupportActionBar(toolbar);
-
-        // Setup database
-        myDB = new DBHelper(this);
-        // Give all models a reference to the database.
-        Recipe.db = myDB;
-        Category.db = myDB;
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -64,8 +64,6 @@ public class RecipeViewActivity extends AppCompatActivity
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-
     }
 
     /**
@@ -127,23 +125,27 @@ public class RecipeViewActivity extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position)
             {
                 case 0:
-                    return new AllRecipesFragment();
+                    RecipeViewFragment fragment = new RecipeViewFragment();
+                    fragment.setCategories(selectedRecipe.getCategories());
+                    return fragment;
+
                 case 1:
-                    return new CategoryFragment();
+                    RecipeViewFragment fragment2 = new RecipeViewFragment();
+                    fragment2.setCategories(selectedRecipe.getCategories());
+                    return fragment2;
                 case 2:
-                    return new FavRecipesFragment();
+                    RecipeViewFragment fragment3 = new RecipeViewFragment();
+                    fragment3.setCategories(selectedRecipe.getCategories());
+                    return fragment3;
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
     }
