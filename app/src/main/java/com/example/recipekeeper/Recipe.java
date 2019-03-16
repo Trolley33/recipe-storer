@@ -100,6 +100,11 @@ public class Recipe {
         db.createNewRecipe(name, overview, fav);
     }
 
+    public void delete ()
+    {
+        db.deleteRecipe(getID());
+    }
+
     public static ArrayList<Recipe> getRecipeList(Enum filter)
     {
         ArrayList<Recipe> recipes = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.example.recipekeeper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -52,6 +53,8 @@ public class RecipeViewActivity extends AppCompatActivity
         toolbar.setTitle(selectedRecipe.getName());
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -73,7 +76,7 @@ public class RecipeViewActivity extends AppCompatActivity
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_menu, menu);
+        getMenuInflater().inflate(R.menu.recipe_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -85,23 +88,36 @@ public class RecipeViewActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.search:
-                searchPressed();
-                break;
-            case R.id.help:
-                helpPressed();
+            case R.id.delete:
+                deletePressed();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    void searchPressed() {
-        showMessage("TODO", "Run search function.");
-    }
+    void deletePressed()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Really Delete Recipe?");
+        builder.setMessage("This cannot be undone.");
 
-    void helpPressed() {
-        showMessage("TODO", "Run help function.");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                selectedRecipe.delete();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     void showMessage (String title, String message)
@@ -128,14 +144,15 @@ public class RecipeViewActivity extends AppCompatActivity
             switch (position)
             {
                 case 0:
-                    RecipeViewFragment fragment = new RecipeViewFragment();
-                    fragment.setCategories(selectedRecipe.getCategories());
-                    return fragment;
+                    RecipeViewFragment view_fragment = new RecipeViewFragment();
+                    view_fragment.setCategories(selectedRecipe.getCategories());
+                    return view_fragment;
 
                 case 1:
-                    RecipeViewFragment fragment2 = new RecipeViewFragment();
-                    fragment2.setCategories(selectedRecipe.getCategories());
-                    return fragment2;
+                    RecipeIngredientsFragment ingredients_fragment = new RecipeIngredientsFragment();
+                    ingredients_fragment.setSelectedRecipe(selectedRecipe);
+                    return ingredients_fragment;
+
                 case 2:
                     RecipeViewFragment fragment3 = new RecipeViewFragment();
                     fragment3.setCategories(selectedRecipe.getCategories());
