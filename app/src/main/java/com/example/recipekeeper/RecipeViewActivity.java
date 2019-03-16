@@ -145,6 +145,7 @@ public class RecipeViewActivity extends AppCompatActivity
             {
                 case 0:
                     RecipeViewFragment view_fragment = new RecipeViewFragment();
+                    view_fragment.setSelectedRecipe(selectedRecipe);
                     view_fragment.setCategories(selectedRecipe.getCategories());
                     return view_fragment;
 
@@ -155,6 +156,7 @@ public class RecipeViewActivity extends AppCompatActivity
 
                 case 2:
                     RecipeViewFragment fragment3 = new RecipeViewFragment();
+                    fragment3.setSelectedRecipe(selectedRecipe);
                     fragment3.setCategories(selectedRecipe.getCategories());
                     return fragment3;
             }

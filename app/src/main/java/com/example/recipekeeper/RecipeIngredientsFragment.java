@@ -3,7 +3,6 @@ package com.example.recipekeeper;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,7 +63,7 @@ public class RecipeIngredientsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         ingredientsAdapter = new ArrayList<>();
-        adapter = new IngredientAdapter(ingredientsAdapter);
+        adapter = new IngredientAdapter(ingredientsAdapter, this);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -91,7 +89,7 @@ public class RecipeIngredientsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
-        FloatingActionButton fab = view.findViewById(R.id.fab);
+        FloatingActionButton fab = view.findViewById(R.id.edit_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

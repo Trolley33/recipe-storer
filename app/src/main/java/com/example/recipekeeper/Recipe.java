@@ -85,6 +85,12 @@ public class Recipe {
         updateRecipe();
     }
 
+    public void setOverview(String _overview)
+    {
+        overview = _overview;
+        updateRecipe();
+    }
+
     void updateRecipe ()
     {
         db.updateRecipe(getID(), getName(), getOverview(), isFavourite() ? 1 : 0, getPosition());

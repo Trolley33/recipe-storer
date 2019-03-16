@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public enum FILTER {ALL, FAVOURITES};
 
     DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, 8);
+        super(context, DATABASE_NAME, null, 9);
         Recipe.db = this;
         Category.db = this;
         Ingredient.db = this;
@@ -189,6 +189,12 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         return db.rawQuery("SELECT * FROM ingredients WHERE RECIPE_ID="+id+" ORDER BY POSITION", null);
+    }
+
+    public void deleteIngredient(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("ingredients", "ID="+id, null);
     }
 
 

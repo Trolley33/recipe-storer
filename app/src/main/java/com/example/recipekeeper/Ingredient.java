@@ -77,6 +77,11 @@ public class Ingredient {
         db.createNewIngredient(recipe_id, desc, amount, getIngredientList(recipe_id).size());
     }
 
+    public void delete ()
+    {
+        db.deleteIngredient(getID());
+    }
+
     public static ArrayList<Ingredient> getIngredientList(int recipe_id)
     {
         ArrayList<Ingredient> ingredients = new ArrayList<>();
