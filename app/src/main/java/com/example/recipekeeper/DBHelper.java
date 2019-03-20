@@ -197,5 +197,41 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete("ingredients", "ID="+id, null);
     }
 
+    /* --- Methods --- */
+    boolean createNewMethod(int recipe_id, int pos, String step, double time)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("RECIPE_ID", recipe_id);
+        contentValues.put("POSITION", pos);
+        contentValues.put("STEP", step);
+        contentValues.put("TIME", time);
+        long result = db.insert("methods", null, contentValues);
 
+        return result != -1;
+    }
+
+    public void updateMethod(int id, int recipe_id, int pos, String step, double time)
+    {
+        SQLiteDatabase db  = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("POSITION", pos);
+        contentValues.put("STEP", step);
+        contentValues.put("TIME", time);
+        db.update("methods", contentValues, "ID="+id, null);
+    }
+
+    public Cursor getMethodList(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        return db.rawQuery("SELECT * FROM methods WHERE RECIPE_ID="+id+" ORDER BY POSITION", null);
+    }
+
+    public void deleteMethod(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("methods", "ID="+id, null);
+    }
 }
