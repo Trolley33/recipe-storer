@@ -33,7 +33,7 @@ public class RecipeIngredientsFragment extends Fragment {
     private int mColumnCount = 1;
 
     private RecyclerView recyclerView;
-    private List<Ingredient> ingredientsAdapter;
+    private List<Ingredient> ingredientsList;
     private IngredientAdapter adapter;
 
     /**
@@ -62,8 +62,8 @@ public class RecipeIngredientsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ingredientsAdapter = new ArrayList<>();
-        adapter = new IngredientAdapter(ingredientsAdapter, this);
+        ingredientsList = new ArrayList<>();
+        adapter = new IngredientAdapter(ingredientsList, this);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -89,7 +89,7 @@ public class RecipeIngredientsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
-        FloatingActionButton fab = view.findViewById(R.id.edit_fab);
+        FloatingActionButton fab = view.findViewById(R.id.add_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,10 +112,10 @@ public class RecipeIngredientsFragment extends Fragment {
             // When an item is dragged and dropped.
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 // Swap dragged item and target item.
-                ingredientsAdapter.get(viewHolder.getAdapterPosition()).setPosition(target.getAdapterPosition());
-                ingredientsAdapter.get(target.getAdapterPosition()).setPosition(viewHolder.getAdapterPosition());
+                ingredientsList.get(viewHolder.getAdapterPosition()).setPosition(target.getAdapterPosition());
+                ingredientsList.get(target.getAdapterPosition()).setPosition(viewHolder.getAdapterPosition());
 
-                Collections.swap(ingredientsAdapter, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                Collections.swap(ingredientsList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
 
                 // Notify adapter to change positions.
                 adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
@@ -140,8 +140,8 @@ public class RecipeIngredientsFragment extends Fragment {
 
     void refreshIngredients(View view)
     {
-        ingredientsAdapter.clear();
-        ingredientsAdapter.addAll(Ingredient.getIngredientList(selectedRecipe.getID()));
+        ingredientsList.clear();
+        ingredientsList.addAll(Ingredient.getIngredientList(selectedRecipe.getID()));
         adapter.notifyDataSetChanged();
     }
 

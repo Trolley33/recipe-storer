@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 
  * interface.
  */
-public class RecipeViewFragment extends Fragment {
+public class RecipeOverviewFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -31,12 +30,12 @@ public class RecipeViewFragment extends Fragment {
 
     private ArrayList<Category> categories;
 
-    public RecipeViewFragment() {
+    public RecipeOverviewFragment() {
     }
 
     // TODO: Customize parameter initialization
-    public static RecipeViewFragment newInstance(int columnCount) {
-        RecipeViewFragment fragment = new RecipeViewFragment();
+    public static RecipeOverviewFragment newInstance(int columnCount) {
+        RecipeOverviewFragment fragment = new RecipeOverviewFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);

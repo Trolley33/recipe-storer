@@ -3,11 +3,8 @@ package com.example.recipekeeper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -15,18 +12,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-
-import java.util.List;
-
-public class RecipeViewActivity extends AppCompatActivity
+public class RecipeActivity extends AppCompatActivity
 {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -144,7 +133,7 @@ public class RecipeViewActivity extends AppCompatActivity
             switch (position)
             {
                 case 0:
-                    RecipeViewFragment view_fragment = new RecipeViewFragment();
+                    RecipeOverviewFragment view_fragment = new RecipeOverviewFragment();
                     view_fragment.setSelectedRecipe(selectedRecipe);
                     view_fragment.setCategories(selectedRecipe.getCategories());
                     return view_fragment;
@@ -155,7 +144,7 @@ public class RecipeViewActivity extends AppCompatActivity
                     return ingredients_fragment;
 
                 case 2:
-                    RecipeViewFragment fragment3 = new RecipeViewFragment();
+                    RecipeOverviewFragment fragment3 = new RecipeOverviewFragment();
                     fragment3.setSelectedRecipe(selectedRecipe);
                     fragment3.setCategories(selectedRecipe.getCategories());
                     return fragment3;

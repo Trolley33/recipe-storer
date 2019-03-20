@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".RecipeViewActivity"
+        <activity android:name=".RecipeActivity"
             android:label="@string/title_activity_recipe"
             android:parentActivityName=".HomeActivity">
             <meta-data
