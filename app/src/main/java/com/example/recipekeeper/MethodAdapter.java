@@ -43,11 +43,14 @@ public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder
     public void onBindViewHolder(@NonNull final MethodAdapter.ViewHolder viewHolder, int i) {
         final Method method = methods.get(i);
 
+        TextView posTextView = viewHolder.posTextView;
+        posTextView.setText(String.format("%d.", i+1));
+
         TextView stepTextView = viewHolder.stepTextView;
         stepTextView.setText(method.getStep());
 
         TextView timeTextView = viewHolder.timeTextView;
-        timeTextView.setText(String.format("%f", method.getTime()));
+        timeTextView.setText(String.format("%.2f mins", method.getTime()));
 
         ConstraintLayout layout = viewHolder.layout;
         final Context context = viewHolder.context;
@@ -83,7 +86,7 @@ public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder
         final EditText time_input = v.findViewById(R.id.time_edit);
 
         step_input.setText(method.getStep());
-        time_input.setText(String.format("%f", method.getTime()));
+        time_input.setText(String.format("%.2f", method.getTime()));
 
         builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
@@ -136,6 +139,8 @@ public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout layout;
+
+        TextView posTextView;
         TextView stepTextView;
         TextView timeTextView;
 
@@ -150,6 +155,8 @@ public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder
             context = itemView.getContext();
 
             layout =  itemView.findViewById(R.id.layout);
+
+            posTextView = itemView.findViewById(R.id.method_position);
             stepTextView = itemView.findViewById(R.id.method_step);
             timeTextView = itemView.findViewById(R.id.method_time);
 
