@@ -144,10 +144,9 @@ public class RecipeActivity extends AppCompatActivity
                     return ingredients_fragment;
 
                 case 2:
-                    RecipeOverviewFragment fragment3 = new RecipeOverviewFragment();
-                    fragment3.setSelectedRecipe(selectedRecipe);
-                    fragment3.setCategories(selectedRecipe.getCategories());
-                    return fragment3;
+                    RecipeMethodsFragment methods_fragment = new RecipeMethodsFragment();
+                    methods_fragment.setSelectedRecipe(selectedRecipe);
+                    return methods_fragment;
             }
             return null;
         }

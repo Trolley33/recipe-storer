@@ -23,6 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Recipe.db = this;
         Category.db = this;
         Ingredient.db = this;
+        Method.db = this;
     }
 
     /**
