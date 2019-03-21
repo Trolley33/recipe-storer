@@ -24,16 +24,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="@dimen/appbar_padding_top"
             android:text="Categories:"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/categories_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="25"
+            android:gravity="left|center_vertical"
+            android:textAllCaps="false"
             android:textSize="18sp"
-            tools:text="Chicken, Main, Dessert, +3 more" />
+            android:textStyle="bold"
+            tools:text="None" />
     </LinearLayout>
 
     <TextView

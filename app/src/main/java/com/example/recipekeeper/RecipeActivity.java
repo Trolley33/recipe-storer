@@ -135,6 +135,7 @@ public class RecipeActivity extends AppCompatActivity
                 case 0:
                     RecipeOverviewFragment view_fragment = new RecipeOverviewFragment();
                     view_fragment.setSelectedRecipe(selectedRecipe);
+                    view_fragment.setMethod(Method.getMethodList(selectedRecipe.getID()));
                     view_fragment.setCategories(selectedRecipe.getCategories());
                     return view_fragment;
 
