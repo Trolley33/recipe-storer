@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * A fragment representing a list of Items.
@@ -72,20 +73,33 @@ public class RecipeOverviewFragment extends Fragment {
         if (categories.size() == 0)
             categories_text.setText("Categories: None");
         else
-            // TODO: fix this.
-            categories_text.setText(String.format("Categories: %s", categories.get(0).getName()));
+            if (categories.size() <= 3) {
+                StringBuilder text = new StringBuilder();
+                for (Category c : categories) {
+                    text.append(c.getName()).append(", ");
+                }
+                categories_text.setText(String.format("Categories: %s", text.toString()));
+            }
+            else
+            {
+                StringBuilder text = new StringBuilder();
+                for (int i = 0 ; i < 3; i++) {
+                    text.append(categories.get(i).getName()).append(", ");
+                }
+                categories_text.setText(String.format("Categories: %s +%d more", text.toString(), categories.size() - 3));
+            }
 
-        final TextView textView = view.findViewById(R.id.overview_text);
-        final EditText editText = view.findViewById(R.id.overview_edit);
+        final TextView overviewTextView = view.findViewById(R.id.overview_text);
+        final EditText overviewEditText = view.findViewById(R.id.overview_edit);
 
         final FloatingActionButton edit_fab = view.findViewById(R.id.edit_fab);
         final FloatingActionButton save_fab = view.findViewById(R.id.save_fab);
 
-        textView.setText(selectedRecipe.getOverview());
-        editText.setText(selectedRecipe.getOverview());
+        overviewTextView.setText(selectedRecipe.getOverview());
+        overviewEditText.setText(selectedRecipe.getOverview());
 
-        textView.setVisibility(View.VISIBLE);
-        editText.setVisibility(View.INVISIBLE);
+        overviewTextView.setVisibility(View.VISIBLE);
+        overviewEditText.setVisibility(View.INVISIBLE);
 
         edit_fab.setVisibility(View.VISIBLE);
         save_fab.setVisibility(View.INVISIBLE);
@@ -95,14 +109,17 @@ public class RecipeOverviewFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                textView.setVisibility(View.INVISIBLE);
-                editText.setVisibility(View.VISIBLE);
-                if (editText.requestFocus())
+                // Hide text box, show edit box.
+                overviewTextView.setVisibility(View.INVISIBLE);
+                overviewEditText.setVisibility(View.VISIBLE);
+
+                // Grab focus onto text field.
+                if (overviewEditText.requestFocus())
                 {
                     InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                    imm.showSoftInput(overviewEditText, InputMethodManager.SHOW_IMPLICIT);
                 }
-
+                // Hide edit button, show save button.
                 edit_fab.setVisibility(View.INVISIBLE);
                 save_fab.setVisibility(View.VISIBLE);
             }
@@ -112,14 +129,17 @@ public class RecipeOverviewFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                textView.setVisibility(View.VISIBLE);
-                editText.setVisibility(View.INVISIBLE);
+                // Hide edit box, show text box.
+                overviewTextView.setVisibility(View.VISIBLE);
+                overviewEditText.setVisibility(View.INVISIBLE);
 
+                // Hide save button, show edit button.
                 edit_fab.setVisibility(View.VISIBLE);
                 save_fab.setVisibility(View.INVISIBLE);
 
-                String overview = editText.getText().toString();
-                textView.setText(overview);
+                // Get new overview text, and save it to database.
+                String overview = overviewEditText.getText().toString();
+                overviewTextView.setText(overview);
                 selectedRecipe.setOverview(overview);
             }
         });
