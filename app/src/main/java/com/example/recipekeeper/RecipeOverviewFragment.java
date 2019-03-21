@@ -69,16 +69,16 @@ public class RecipeOverviewFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_recipe_overview, container, false);
         final Context context = view.getContext();
 
-        TextView categories_text = view.findViewById(R.id.categories);
+        TextView categories_content = view.findViewById(R.id.categories_content);
         if (categories.size() == 0)
-            categories_text.setText("Categories: None");
+            categories_content.setText("None");
         else
             if (categories.size() <= 3) {
                 StringBuilder text = new StringBuilder();
                 for (Category c : categories) {
                     text.append(c.getName()).append(", ");
                 }
-                categories_text.setText(String.format("Categories: %s", text.toString()));
+                categories_content.setText(text.toString());
             }
             else
             {
@@ -86,7 +86,7 @@ public class RecipeOverviewFragment extends Fragment {
                 for (int i = 0 ; i < 3; i++) {
                     text.append(categories.get(i).getName()).append(", ");
                 }
-                categories_text.setText(String.format("Categories: %s +%d more", text.toString(), categories.size() - 3));
+                categories_content.setText(String.format("%s +%d more", text.toString(), categories.size() - 3));
             }
 
         final TextView overviewTextView = view.findViewById(R.id.overview_text);
@@ -143,7 +143,6 @@ public class RecipeOverviewFragment extends Fragment {
                 selectedRecipe.setOverview(overview);
             }
         });
-
         return view;
     }
 

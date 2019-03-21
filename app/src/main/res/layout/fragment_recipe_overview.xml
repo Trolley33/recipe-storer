@@ -9,18 +9,32 @@
     android:layout_marginRight="16dp"
     app:layoutManager="android.support.v7.widget.LinearLayoutManager" >
 
-    <TextView
-        android:id="@+id/categories"
+    <LinearLayout
+        android:id="@+id/category_frame"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/border"
-        android:padding="@dimen/appbar_padding_top"
-        android:text="Categories: {}"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/categories_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Categories:"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/categories_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            tools:text="Chicken, Main, Dessert, +3 more" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/time"
@@ -28,12 +42,12 @@
         android:layout_height="wrap_content"
         android:background="@drawable/border"
         android:padding="@dimen/appbar_padding_top"
-        android:text="Time: {} mins"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categories" />
+        app:layout_constraintTop_toBottomOf="@+id/category_frame"
+        tools:text="Time: {} mins" />
 
     <TextView
         android:id="@+id/overview_text"
@@ -50,7 +64,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Test text." />
 
     <EditText
         android:id="@+id/overview_edit"
@@ -63,12 +78,14 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
+        android:inputType="textLongMessage"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/edit_fab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Test text." />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/edit_fab"
