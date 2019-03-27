@@ -159,6 +159,33 @@ public class DBHelper extends SQLiteOpenHelper {
                 null);
     }
 
+    public boolean addCategoryToRecipe (int recipe_id, int category_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT * FROM recipe_category WHERE RECIPE_ID="+recipe_id+" AND CATEGORY_ID="+category_id, null);
+        if (c.getCount() != 0)
+        {
+            c.close();
+            return false;
+        }
+
+        c.close();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("RECIPE_ID", recipe_id);
+        contentValues.put("CATEGORY_ID", category_id);
+        long result = db.insert("recipe_category", null, contentValues);
+
+        db.close();
+        return result != -1;
+    }
+
+    public boolean removeCategoryFromRecipe(int recipe_id, int category_id)
+    {
+        return false;
+    }
+
     /* ---- Ingredients ---- */
 
     boolean createNewIngredient(int recipe_id, String desc, String amount, int pos)

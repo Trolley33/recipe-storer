@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -189,6 +190,7 @@ public class RecipeOverviewFragment extends Fragment {
                 String overview = overviewEditText.getText().toString();
                 overviewTextView.setText(overview);
                 selectedRecipe.setOverview(overview);
+                setCategories(selectedRecipe.getCategories());
             }
         });
         return view;
@@ -196,21 +198,52 @@ public class RecipeOverviewFragment extends Fragment {
 
     void editCategories (View root)
     {
+        final View r = root;
         final AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
-        builder.setTitle("Edit categories");
 
-        View v = getLayoutInflater().inflate(R.layout.add_method_popup, null);
+        builder.setTitle("Choose categories");
 
-        builder.setView(v);
+        ArrayList<Category> allCategories = Category.getCategoryList();
 
-        final EditText step_input = v.findViewById(R.id.step_edit);
-        final EditText time_input = v.findViewById(R.id.time_edit);
+        final String[] cat_strings = new String[allCategories.size()];
+        final int[] cat_ids = new int[allCategories.size()];
+        final boolean[] cat_bools = new boolean[allCategories.size()];
 
-        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        for (int i = 0; i < allCategories.size(); i++)
+        {
+            cat_strings[i] = allCategories.get(i).getName();
+            cat_ids[i] = allCategories.get(i).getID();
+            for (int j = 0; j < categories.size(); j++)
+            {
+                if (categories.get(j) == allCategories.get(i))
+                {
+                    cat_bools[i] = true;
+                    break;
+                }
+            }
+        }
+
+        builder.setMultiChoiceItems(cat_strings, cat_bools, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+            }
+        });
+
+        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Method.addMethod(selectedRecipe.getID(), step_input.getText().toString(), Double.parseDouble(time_input.getText().toString()));
-                // refreshMethods(null);
+                for (int i = 0; i < cat_strings.length; i++)
+                {
+                    if (cat_bools[i])
+                    {
+                        selectedRecipe.addCategory(cat_ids[i]);
+                    }
+                    else
+                    {
+                        selectedRecipe.removeCategory(cat_ids[i]);
+                    }
+                }
             }
         });
 

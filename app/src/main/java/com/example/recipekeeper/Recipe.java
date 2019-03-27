@@ -1,6 +1,7 @@
 package com.example.recipekeeper;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -13,8 +14,6 @@ public class Recipe {
     private boolean favourite;
     private int position;
 
-    private ArrayList<Category> categories;
-
     static DBHelper db;
 
     public Recipe (int _id, String _name, String _overview, int _fav, int _pos)
@@ -24,23 +23,6 @@ public class Recipe {
         overview = _overview;
         favourite = (_fav == 1);
         position = _pos;
-        categories = initCategories();
-    }
-
-    private ArrayList<Category> initCategories()
-    {
-        ArrayList<Category> output = new ArrayList<>();
-        Cursor res = db.getCategoryRecipeList();
-
-        while (res.moveToNext())
-        {
-            int recipe_id = res.getInt(3);
-            int cat_id = res.getInt(0);
-            if (id == recipe_id)
-                output.add(Category.getFromID(cat_id));
-        }
-
-        return output;
     }
 
     public int getID()
@@ -70,6 +52,18 @@ public class Recipe {
 
     public ArrayList<Category> getCategories ()
     {
+        ArrayList<Category> categories = new ArrayList<>();
+        Cursor res = db.getCategoryRecipeList();
+
+        while (res.moveToNext())
+        {
+            int recipe_id = res.getInt(2);
+            int cat_id = res.getInt(0);
+            if (getID() == recipe_id) {
+                categories.add(Category.getFromID(cat_id));
+            }
+        }
+
         return categories;
     }
 
@@ -89,6 +83,16 @@ public class Recipe {
     {
         overview = _overview;
         updateRecipe();
+    }
+
+    public boolean addCategory(int category_id)
+    {
+        return db.addCategoryToRecipe(getID(), category_id);
+    }
+
+    public boolean removeCategory(int category_id)
+    {
+        return db.removeCategoryFromRecipe(getID(), category_id);
     }
 
     void updateRecipe ()
