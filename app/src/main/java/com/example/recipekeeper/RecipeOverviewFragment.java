@@ -89,8 +89,7 @@ public class RecipeOverviewFragment extends Fragment {
 
         // Calculate time for recipe to finish.
         double t = 0;
-        for (Method step : method)
-        {
+        for (Method step : method) {
             t += step.getTime();
         }
 
@@ -99,9 +98,11 @@ public class RecipeOverviewFragment extends Fragment {
         // Get category display.
         final TextView categories_content = view.findViewById(R.id.categories_content);
         // No categories -> None
-        if (categories.size() == 0)
+        if (categories.size() == 0) {
             categories_content.setText("None");
+        }
         else
+        {
             // <= 3 categories -> C1, C2, C3
             if (categories.size() <= 3) {
                 StringBuilder text = new StringBuilder();
@@ -111,14 +112,14 @@ public class RecipeOverviewFragment extends Fragment {
                 categories_content.setText(text.toString());
             }
             // > 3 categories -> C1, C2, C3, +X more
-            else
-            {
+            else {
                 StringBuilder text = new StringBuilder();
-                for (int i = 0 ; i < 3; i++) {
+                for (int i = 0; i < 3; i++) {
                     text.append(categories.get(i).getName()).append(", ");
                 }
                 categories_content.setText(String.format("%s +%d more", text.toString(), categories.size() - 3));
             }
+        }
 
         // Overview text section, and overview edit text section.
         final TextView overviewTextView = view.findViewById(R.id.overview_text);
@@ -139,7 +140,7 @@ public class RecipeOverviewFragment extends Fragment {
 
         edit_fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
+            public void onClick(View v)
             {
                 // Hide text box, show edit box.
                 overviewTextView.setVisibility(View.INVISIBLE);
@@ -170,7 +171,7 @@ public class RecipeOverviewFragment extends Fragment {
 
         save_fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
+            public void onClick(View v)
             {
                 // Hide edit box, show text box.
                 overviewTextView.setVisibility(View.VISIBLE);
@@ -190,7 +191,9 @@ public class RecipeOverviewFragment extends Fragment {
                 String overview = overviewEditText.getText().toString();
                 overviewTextView.setText(overview);
                 selectedRecipe.setOverview(overview);
+
                 setCategories(selectedRecipe.getCategories());
+                refreshText(view);
             }
         });
         return view;
@@ -200,6 +203,8 @@ public class RecipeOverviewFragment extends Fragment {
     {
         final View r = root;
         final AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
+
+        setCategories(selectedRecipe.getCategories());
 
         builder.setTitle("Choose categories");
 
@@ -215,7 +220,8 @@ public class RecipeOverviewFragment extends Fragment {
             cat_ids[i] = allCategories.get(i).getID();
             for (int j = 0; j < categories.size(); j++)
             {
-                if (categories.get(j) == allCategories.get(i))
+                // Log.e("Recipe:",
+                if (categories.get(j).getID() == allCategories.get(i).getID())
                 {
                     cat_bools[i] = true;
                     break;
@@ -255,6 +261,35 @@ public class RecipeOverviewFragment extends Fragment {
         });
 
         builder.show();
+    }
+
+    void refreshText(View v)
+    {
+        // Get category display.
+        final TextView categories_content = v.findViewById(R.id.categories_content);
+        // No categories -> None
+        if (categories.size() == 0) {
+            categories_content.setText("None");
+        }
+        else
+        {
+            // <= 3 categories -> C1, C2, C3
+            if (categories.size() <= 3) {
+                StringBuilder text = new StringBuilder();
+                for (Category c : categories) {
+                    text.append(c.getName()).append(", ");
+                }
+                categories_content.setText(text.toString());
+            }
+            // > 3 categories -> C1, C2, C3, +X more
+            else {
+                StringBuilder text = new StringBuilder();
+                for (int i = 0; i < 3; i++) {
+                    text.append(categories.get(i).getName()).append(", ");
+                }
+                categories_content.setText(String.format("%s +%d more", text.toString(), categories.size() - 3));
+            }
+        }
     }
 
     @Override
