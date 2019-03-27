@@ -90,9 +90,9 @@ public class Recipe {
         return db.addCategoryToRecipe(getID(), category_id);
     }
 
-    public boolean removeCategory(int category_id)
+    public void removeCategory(int category_id)
     {
-        return db.removeCategoryFromRecipe(getID(), category_id);
+        db.removeCategoryFromRecipe(getID(), category_id);
     }
 
     void updateRecipe ()

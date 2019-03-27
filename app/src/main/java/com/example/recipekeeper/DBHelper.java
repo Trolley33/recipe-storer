@@ -181,9 +181,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean removeCategoryFromRecipe(int recipe_id, int category_id)
+    public void removeCategoryFromRecipe(int recipe_id, int category_id)
     {
-        return false;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete("recipe_category", "RECIPE_ID="+recipe_id+" AND CATEGORY_ID="+category_id, null);
     }
 
     /* ---- Ingredients ---- */
