@@ -53,26 +53,12 @@ public class Category {
     }
     public int getRecipeCount()
     {
-        Cursor res = db.getCategoryRecipeList();
-
-        if (res == null)
-        {
-            return 0;
-        }
-
-        int total = 0;
-        while (res.moveToNext())
-        {
-            int cat_id = res.getInt(0);
-            if (id == cat_id)
-                total++;
-        }
-
-        return total;
+        return getRecipeList().size();
     }
 
     public void delete ()
     {
+        db.deleteCategory(getID(), getRecipeList().toArray(new Recipe[0]));
 
     }
 

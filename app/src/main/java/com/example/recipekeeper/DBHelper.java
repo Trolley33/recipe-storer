@@ -155,6 +155,18 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM categories ORDER BY NAME", null);
     }
 
+    public void deleteCategory(int category_id, Recipe[] associated_recipes)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete("categories", "ID="+category_id, null);
+
+        for (Recipe r : associated_recipes)
+        {
+            removeCategoryFromRecipe(r.getID(), category_id);
+        }
+    }
+
     /* ---- Category Recipe ---- */
     public Cursor getCategoryRecipeList ()
     {
