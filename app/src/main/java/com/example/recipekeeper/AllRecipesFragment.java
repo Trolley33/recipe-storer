@@ -123,6 +123,13 @@ public class AllRecipesFragment extends Fragment {
             }
 
             @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+
+                refreshRecipes(null);
+            }
+
+            @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
                         ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
@@ -136,7 +143,13 @@ public class AllRecipesFragment extends Fragment {
     void refreshRecipes(View view)
     {
         recipeList.clear();
-        recipeList.addAll(Recipe.getRecipeList(DBHelper.FILTER.ALL));
+        // Reset ordering to start at 0.
+        ArrayList<Recipe> rList = Recipe.getRecipeList(DBHelper.FILTER.ALL);
+        for (int i = 0; i < rList.size(); i++)
+        {
+            rList.get(i).setPosition(i);
+        }
+        recipeList.addAll(rList);
         adapter.notifyDataSetChanged();
     }
 

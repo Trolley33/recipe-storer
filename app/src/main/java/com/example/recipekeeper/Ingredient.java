@@ -74,7 +74,7 @@ public class Ingredient {
 
     public static void addIngredient(int recipe_id, String desc, String amount)
     {
-        db.createNewIngredient(recipe_id, desc, amount, getIngredientList(recipe_id).size());
+        db.createNewIngredient(recipe_id, desc, amount);
     }
 
     public void delete ()

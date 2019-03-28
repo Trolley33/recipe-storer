@@ -83,10 +83,19 @@ public class DBHelper extends SQLiteOpenHelper {
     boolean createNewRecipe(String name, String overview, int fav)
     {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        int pos = 0;
+        Cursor cursor = db.rawQuery("SELECT MAX(POSITION) FROM recipes", null);
+        if (cursor.moveToFirst())
+        {
+            pos = cursor.getInt(0) + 1;
+        }
+
         ContentValues contentValues = new ContentValues();
         contentValues.put("NAME", name);
         contentValues.put("OVERVIEW", "");
         contentValues.put("FAVOURITE", fav);
+        contentValues.put("POSITION", pos);
         long result = db.insert("recipes", null, contentValues);
 
         return result != -1;
@@ -190,10 +199,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* ---- Ingredients ---- */
 
-    boolean createNewIngredient(int recipe_id, String desc, String amount, int pos)
+    boolean createNewIngredient(int recipe_id, String desc, String amount)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+
+        int pos = 0;
+        Cursor cursor = db.rawQuery("SELECT MAX(POSITION) FROM ingredients WHERE RECIPE_ID="+recipe_id, null);
+        if (cursor.moveToFirst())
+        {
+            pos = cursor.getInt(0) + 1;
+        }
+
         contentValues.put("RECIPE_ID", recipe_id);
         contentValues.put("DESCRIPTION", desc);
         contentValues.put("AMOUNT", amount);
