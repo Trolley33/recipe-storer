@@ -106,8 +106,12 @@ public class RecipeOverviewFragment extends Fragment {
             // <= 3 categories -> C1, C2, C3
             if (categories.size() <= 3) {
                 StringBuilder text = new StringBuilder();
-                for (Category c : categories) {
-                    text.append(c.getName()).append(", ");
+                for (int i = 0; i < categories.size(); i++) {
+                    text.append(categories.get(i).getName());
+                    if (i != categories.size() - 1)
+                    {
+                        text.append(", ");
+                    }
                 }
                 categories_content.setText(text.toString());
             }
