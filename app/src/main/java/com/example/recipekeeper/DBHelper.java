@@ -155,6 +155,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM categories ORDER BY NAME", null);
     }
 
+    public void updateCategory(int id, String name)
+    {
+        SQLiteDatabase db  = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NAME", name);
+        db.update("categories", contentValues, "ID="+id, null);
+    }
+
     public void deleteCategory(int category_id, Recipe[] associated_recipes)
     {
         SQLiteDatabase db = this.getWritableDatabase();

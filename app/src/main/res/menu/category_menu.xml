@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/edit"
+        android:icon="@drawable/ic_baseline_edit_24px"
+        app:showAsAction="ifRoom"
+        android:title="Edit" />
+
+    <item
         android:id="@+id/delete"
         android:icon="@drawable/ic_baseline_delete_24px"
         app:showAsAction="ifRoom"

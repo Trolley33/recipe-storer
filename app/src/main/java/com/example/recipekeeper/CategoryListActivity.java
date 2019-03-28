@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,8 @@ public class CategoryListActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private List<Recipe> recipeList;
     private RecipeAdapter adapter;
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class CategoryListActivity extends AppCompatActivity
         selectedCategory = Category.getFromID(id);
 
         // Setup action bar
-        Toolbar toolbar = findViewById(R.id.action_bar);
+        toolbar = findViewById(R.id.action_bar);
         toolbar.setTitle(selectedCategory.getName());
         setSupportActionBar(toolbar);
 
@@ -89,11 +92,41 @@ public class CategoryListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.edit:
+                editPressed();
+                break;
             case R.id.delete:
                 deletePressed();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void editPressed()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Edit Category Name");
+
+        final EditText input = new EditText(this);
+        input.setText(selectedCategory.getName());
+        builder.setView(input);
+
+        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                selectedCategory.setName(input.getText().toString());
+                toolbar.setTitle(input.getText().toString());
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     void deletePressed()

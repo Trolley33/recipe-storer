@@ -56,6 +56,17 @@ public class Category {
         return getRecipeList().size();
     }
 
+    public void setName (String _name)
+    {
+        name = _name;
+        updateCategory ();
+    }
+
+    void updateCategory ()
+    {
+        db.updateCategory(getID(), getName());
+    }
+
     public void delete ()
     {
         db.deleteCategory(getID(), getRecipeList().toArray(new Recipe[0]));
