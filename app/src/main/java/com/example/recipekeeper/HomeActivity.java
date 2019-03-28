@@ -28,6 +28,8 @@ public class HomeActivity extends AppCompatActivity {
 
     public static final String RECIPE_ID_MESSAGE = "com.example.recipekeeper.extra.RECIPE_ID";
 
+    public static final String CATEGORY_ID_MESSAGE = "com.example.recipekeeper.extra.CATEGORY_ID";
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**

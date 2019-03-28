@@ -29,6 +29,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.recipekeeper.HomeActivity" />
         </activity>
+
+        <activity android:name=".CategoryListActivity"
+            android:label="@string/title_activity_category"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.recipekeeper.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

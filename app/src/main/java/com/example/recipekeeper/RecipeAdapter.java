@@ -79,9 +79,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ConstraintLayout layout;
         TextView nameTextView;
         Button favouriteButton;
+        ConstraintLayout layout;
         Context context;
 
         public ViewHolder(final View itemView) {

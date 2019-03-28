@@ -10,4 +10,5 @@
     <string name="recipe_tab_ingredients">Ingredients</string>
     <string name="recipe_tab_method">Method</string>
 
+    <string name="title_activity_category">Category Viewer</string>
 </resources>

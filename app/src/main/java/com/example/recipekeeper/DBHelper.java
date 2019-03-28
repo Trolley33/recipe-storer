@@ -168,6 +168,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 null);
     }
 
+    public Cursor getCategoryRecipeList (int category_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("" +
+                        "SELECT recipes.ID, recipes.NAME FROM categories " +
+                        "JOIN recipe_category " +
+                        "ON (recipe_category.CATEGORY_ID = categories.ID) " +
+                        "JOIN recipes " +
+                        "ON (recipe_category.RECIPE_ID = recipes.ID) " +
+                        "WHERE categories.ID="+category_id,
+                null);
+    }
+
     public boolean addCategoryToRecipe (int recipe_id, int category_id)
     {
         SQLiteDatabase db = this.getWritableDatabase();

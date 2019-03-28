@@ -1,7 +1,9 @@
 package com.example.recipekeeper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,13 +37,26 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder viewHolder, int i) {
-        Category category = categories.get(i);
+        final Category category = categories.get(i);
+
+        ConstraintLayout layout = viewHolder.layout;
+        final Context context = viewHolder.context;
 
         TextView nameTextView = viewHolder.nameTextView;
         TextView countTextView = viewHolder.countTextView;
 
         nameTextView.setText(category.getName());
         countTextView.setText(String.format("%d Recipes", category.getRecipeCount()));
+
+        layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+            Intent intent = new Intent(context, CategoryListActivity.class);
+
+            intent.putExtra(HomeActivity.CATEGORY_ID_MESSAGE, category.getID());
+            context.startActivity(intent);
+                    }
+        });
     }
 
     @Override
@@ -53,9 +68,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         TextView nameTextView;
         TextView countTextView;
 
+        ConstraintLayout layout;
+        Context context;
+
         public ViewHolder(View itemView) {
 
             super(itemView);
+            layout = (ConstraintLayout) itemView.findViewById(R.id.layout);
+            context = itemView.getContext();
             nameTextView = (TextView) itemView.findViewById(R.id.category_name);
             countTextView = (TextView) itemView.findViewById(R.id.category_count);
         }
