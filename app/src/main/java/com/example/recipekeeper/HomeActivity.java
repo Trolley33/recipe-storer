@@ -1,5 +1,6 @@
 package com.example.recipekeeper;
 
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import java.net.URI;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -59,7 +61,6 @@ public class HomeActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-
     }
 
     /**
@@ -82,6 +83,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
+                Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
                 searchPressed();
                 break;
             case R.id.help:
