@@ -37,8 +37,6 @@ public class HomeActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    DBHelper myDB;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +45,6 @@ public class HomeActivity extends AppCompatActivity {
         // Setup action bar
         Toolbar toolbar = findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
-
-        // Setup database
-        myDB = new DBHelper(this);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
