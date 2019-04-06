@@ -12,7 +12,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <provider
-            android:name=".RecipeContentProvider"
+            android:name=".IngredientsContentProvider"
             android:authorities="com.example.recipekeeper.own.PROVIDER"
             android:enabled="true"
             android:exported="true"></provider>

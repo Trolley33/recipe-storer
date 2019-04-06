@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-public class RecipeContentProvider extends ContentProvider {
-    public RecipeContentProvider() {
+public class IngredientsContentProvider extends ContentProvider {
+    public IngredientsContentProvider() {
     }
 
     private DBHelper helper;
