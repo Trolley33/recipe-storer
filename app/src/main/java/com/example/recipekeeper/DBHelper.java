@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 9);
         Recipe.db = this;
         Category.db = this;
-        Ingredient.db = this;
+        Ingredient.context = context;
         Method.db = this;
     }
 

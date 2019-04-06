@@ -11,11 +11,10 @@ public class IngredientsContentProvider extends ContentProvider {
     }
 
     private DBHelper helper;
-    
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return helper.getWritableDatabase().delete("ingredients", selection, selectionArgs);
     }
 
     @Override
@@ -25,7 +24,9 @@ public class IngredientsContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        helper.getWritableDatabase().insert("ingredients", null, values);
+        return null;
+
     }
 
     @Override
@@ -38,12 +39,12 @@ public class IngredientsContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        return helper.getReadableDatabase().query("recipes", projection, selection, selectionArgs, null, null, sortOrder);
+        return helper.getReadableDatabase().query("ingredients", projection, selection, selectionArgs, null, null, sortOrder);
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return helper.getWritableDatabase().update("ingredients", values, selection, selectionArgs);
     }
 }

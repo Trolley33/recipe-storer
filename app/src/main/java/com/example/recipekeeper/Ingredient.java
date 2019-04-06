@@ -1,8 +1,13 @@
 package com.example.recipekeeper;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 
 import java.lang.reflect.Array;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +18,7 @@ public class Ingredient {
     private String amount;
     private int position;
 
-    static DBHelper db;
+    static Context context;
 
     public Ingredient (int _id, int _recipe_id, String _desc, String _amount, int _pos)
     {
@@ -69,24 +74,63 @@ public class Ingredient {
 
     void updateIngredient ()
     {
-        db.updateIngredient(getID(), getRecipeID(), getDescription(), getAmount(), getPosition());
+        Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
+
+        ContentResolver resolver = context.getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put("RECIPE_ID", getRecipeID());
+        values.put("DESCRIPTION", getDescription());
+        values.put("AMOUNT", getAmount());
+        values.put("POSITION", getPosition());
+
+        String selection = "ID=?";
+        String[] selectionArgs = {Integer.toString(getID())};
+
+        resolver.update(uri, values, selection, selectionArgs);
     }
 
     public static void addIngredient(int recipe_id, String desc, String amount)
     {
-        db.createNewIngredient(recipe_id, desc, amount);
+        Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
+
+        ContentResolver resolver = context.getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put("RECIPE_ID", recipe_id);
+        values.put("DESCRIPTION", desc);
+        values.put("AMOUNT", amount);
+
+        int pos = getIngredientList(recipe_id).size() + 1;
+        values.put("POSITION", pos);
+
+        resolver.insert(uri, values);
     }
 
     public void delete ()
     {
-        db.deleteIngredient(getID());
+        Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
+
+        ContentResolver resolver = context.getContentResolver();
+
+        String selection = "ID=?";
+        String[] selectionArgs = {Integer.toString(getID())};
+
+        resolver.delete(uri, selection, selectionArgs);
     }
 
     public static ArrayList<Ingredient> getIngredientList(int recipe_id)
     {
         ArrayList<Ingredient> ingredients = new ArrayList<>();
 
-        Cursor res = db.getIngredientList(recipe_id);
+        Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
+
+        ContentResolver resolver = context.getContentResolver();
+
+        String selection = "RECIPE_ID=?";
+        String[] selectionArgs = {Integer.toString(recipe_id)};
+
+
+        Cursor res = resolver.query(uri, null, selection, selectionArgs, null);
+
         if (res == null)
         {
             return ingredients;
