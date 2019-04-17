@@ -1,15 +1,157 @@
-<html>
+<html lang="">
 <head>
     <title>User Guide</title>
     <script src="js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="css/w3.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .slide {display:none;}
+        .w3-left, .w3-right, .w3-badge {cursor:pointer}
+        .w3-badge {height:18px;width: 18px;margin:3px;}
+    </style>
 </head>
-<body>
-<div class="w3-container">
-    <h1>First attempt!</h1>
+<body class="w3-light-gray">
+
+<div class="w3-container w3-pink">
+    <h1>User Guide</h1>
 </div>
+
+<div class="">
+    <div class="w3-card-4 w3-center w3-margin w3-padding-large w3-round w3-border w3-display-container">
+        <div class="slide">
+            <header class="w3-container">
+                <h1>Home Page</h1>
+                <hr/>
+            </header>
+            <img src="images/home_screen.jpg" alt="App Home Screen" style="width: 80%" class="w3-border w3-round">
+            <div class="w3-container w3-center">
+                <p>This user guide will show you how to use this app correctly, and show you the different features you can take advantage of.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <header class="w3-container">
+                <h1>Adding a New Recipe</h1>
+                <hr/>
+            </header>
+            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <div class="w3-container w3-center">
+                <p>
+                    Adding a new recipe couldn't be simpler! By selecting the &plus; button
+                    from the lower right corner of the home screen, you can add a
+                    new recipe by entering a name for it. This will add the recipe to the homepage,
+                    where you can press and hold it to move it above/below other recipes.
+                </p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <header class="w3-container">
+                <h1>Adding a new Category</h1>
+                <hr/>
+            </header>
+            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <div class="w3-container w3-center">
+                <p>
+                    Example text!
+                </p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <header class="w3-container">
+                <h1>Adding Categories to a Recipe</h1>
+                <hr/>
+            </header>
+            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <div class="w3-container w3-center">
+                <p>
+                    Example text!
+                </p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <header class="w3-container">
+                <h1>Adding Ingredients to a Recipe</h1>
+                <hr/>
+            </header>
+            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <div class="w3-container w3-center">
+                <p>
+                    Example text!
+                </p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <header class="w3-container">
+                <h1>Adding Method to a Recipe</h1>
+                <hr/>
+            </header>
+            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <div class="w3-container w3-center">
+                <p>
+                    Example text!
+                </p>
+            </div>
+        </div>
+
+
+        <br />
+        <div id="footer" class="w3-center w3-display-bottommiddle" style="width:100%">
+            <div class="w3-left w3-button" onclick="plusDiv(-1)">&#10094;</div>
+            <div class="w3-right w3-button" onclick="plusDiv(1)">&#10095;</div>
+        </div>
+    </div>
+</div>
+
+
 <script>
+    var current_slide;
+    var max_slide;
+
+    $(document).ready(function () {
+        $('.slide').each(function (i, e) {
+            $('#footer').append($("<span class='w3-badge w3-border w3-transparent w3-border-pink' onclick='currentDiv(" + i + ")'></span> "));
+            max_slide = i+1;
+        });
+
+        currentDiv(0);
+    });
+
+    function currentDiv(index) {
+        current_slide = index;
+        var slides = $('.slide');
+        var badges = $('.w3-badge');
+
+        slides.each(function (i, e) {
+            if (i === index) {
+                $(e).show();
+            }
+            else
+            {
+                $(e).hide();
+            }
+        });
+
+        badges.each(function (i, e) {
+           if (i === index) {
+               $(e).addClass('w3-pink');
+           }
+           else {
+               $(e).removeClass('w3-pink');
+           }
+        });
+    }
+
+    function plusDiv(x) {
+        if (current_slide + x < 0) current_slide = max_slide;
+
+        currentDiv((current_slide + x) % max_slide);
+    }
 </script>
 </body>
 </html>
+
+
