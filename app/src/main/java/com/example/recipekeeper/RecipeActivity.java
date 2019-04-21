@@ -3,8 +3,10 @@ package com.example.recipekeeper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -16,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import java.util.List;
+
 public class RecipeActivity extends AppCompatActivity
 {
 
@@ -25,6 +29,8 @@ public class RecipeActivity extends AppCompatActivity
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    ShareActionProvider myShareActionProvider;
+    Intent myShareIntent;
 
     Recipe selectedRecipe;
 
@@ -61,6 +67,35 @@ public class RecipeActivity extends AppCompatActivity
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
+    public void setShareValues() {
+        myShareIntent = new Intent(Intent.ACTION_SEND);
+        myShareIntent.setType("text/plain");
+        myShareIntent.putExtra(Intent.EXTRA_TEXT, getShareText());
+        if (myShareActionProvider != null) {
+            myShareActionProvider.setShareIntent(myShareIntent);
+        }
+    }
+
+    public String getShareText() {
+        List<Ingredient> ingredients = Ingredient.getIngredientList(selectedRecipe.getID());
+        List<Method> steps = Method.getMethodList(selectedRecipe.getID());
+
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("Recipe: %s\n\n", selectedRecipe.getName()));
+
+        result.append("Ingredients:\n");
+        for(Ingredient ingredient : ingredients) {
+            result.append(String.format("• %s - %s\n", ingredient.getDescription(), ingredient.getAmount()));
+        }
+
+        result.append("\nMethod:\n");
+        for(Method step : steps) {
+            result.append(String.format("%d. %s\n", step.getPosition()+1, step.getStep()));
+        }
+
+        return result.toString();
+    }
+
     /**
      * Add custom menu items to action bar.
      * @param menu automatically generated menu
@@ -69,6 +104,12 @@ public class RecipeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.recipe_menu, menu);
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+        myShareActionProvider =
+                (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+
+        setShareValues();
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -140,16 +181,19 @@ public class RecipeActivity extends AppCompatActivity
                     view_fragment.setSelectedRecipe(selectedRecipe);
                     view_fragment.setMethod(Method.getMethodList(selectedRecipe.getID()));
                     view_fragment.setCategories(selectedRecipe.getCategories());
+                    view_fragment.setParent(RecipeActivity.this);
                     return view_fragment;
 
                 case 1:
                     RecipeIngredientsFragment ingredients_fragment = new RecipeIngredientsFragment();
                     ingredients_fragment.setSelectedRecipe(selectedRecipe);
+                    ingredients_fragment.setParent(RecipeActivity.this);
                     return ingredients_fragment;
 
                 case 2:
                     RecipeMethodsFragment methods_fragment = new RecipeMethodsFragment();
                     methods_fragment.setSelectedRecipe(selectedRecipe);
+                    methods_fragment.setParent(RecipeActivity.this);
                     return methods_fragment;
             }
             return null;

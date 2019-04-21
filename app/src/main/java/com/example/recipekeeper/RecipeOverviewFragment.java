@@ -41,6 +41,8 @@ public class RecipeOverviewFragment extends Fragment {
     private ArrayList<Category> categories;
     private ArrayList<Method> method;
 
+    RecipeActivity parent;
+
     public RecipeOverviewFragment() {
     }
 
@@ -294,6 +296,10 @@ public class RecipeOverviewFragment extends Fragment {
                 categories_content.setText(String.format("%s +%d more", text.toString(), categories.size() - 3));
             }
         }
+    }
+
+    void setParent(RecipeActivity _parent) {
+        parent = _parent;
     }
 
     @Override
