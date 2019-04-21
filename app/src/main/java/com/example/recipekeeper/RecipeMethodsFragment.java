@@ -36,6 +36,8 @@ public class RecipeMethodsFragment extends Fragment {
     private List<Method> methodsList;
     private MethodAdapter adapter;
 
+    RecipeActivity parent;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -150,6 +152,7 @@ public class RecipeMethodsFragment extends Fragment {
         methodsList.clear();
         methodsList.addAll(Method.getMethodList(selectedRecipe.getID()));
         adapter.notifyDataSetChanged();
+        parent.setShareValues();
     }
 
     public void addMethod(View view)
@@ -182,6 +185,9 @@ public class RecipeMethodsFragment extends Fragment {
         builder.show();
     }
 
+    void setParent(RecipeActivity _parent) {
+        parent = _parent;
+    }
 
     @Override
     public void onAttach(Context context) {
