@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
@@ -59,34 +62,6 @@ public class RecipeOverviewFragment extends Fragment {
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private void createNotificationChannels() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
-                    "channel",
-                    "Recipe Channel",
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-
-            channel.setDescription("Recipe Notification Channel");
-
-            NotificationManager manager = getContext().getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel);
-        }
-    }
-
-    public void sendNotification() {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            Notification notification = new Notification.Builder(getContext(), "channel")
-                    .setSmallIcon(R.drawable.ic_baseline_star_24px)
-                    .setContentTitle("Test!")
-                    .setContentText("It worked!")
-                    .build();
-
-            notificationManager.notify(1, notification);
-        }
     }
 
     public void setCategories(ArrayList<Category> _categories)
@@ -247,17 +222,25 @@ public class RecipeOverviewFragment extends Fragment {
         return view;
     }
 
-    void startTimer(double minutes) {
-        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, (int) (minutes*60));
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "channel",
+                    "Recipe Channel",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
 
-        Intent intent = new Intent("");
-        PendingIntent broadcast = PendingIntent.getBroadcast(getContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            channel.setDescription("Recipe Notification Channel");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), broadcast);
+            NotificationManager manager = getContext().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
         }
+    }
+
+    void startTimer(double minutes) {
+        Intent intent = new Intent(getContext(), TimerService.class);
+        intent.putExtra("SECONDS", (int) (minutes*60));
+        getContext().startService(intent);
     }
 
     void editCategories (View root)
