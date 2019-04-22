@@ -1,12 +1,16 @@
 package com.example.recipekeeper;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -22,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.URI;
 import java.util.List;
@@ -29,6 +34,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     public static final String RECIPE_ID_MESSAGE = "com.example.recipekeeper.extra.RECIPE_ID";
+    public static final String SEARCH_MESSAGE = "com.example.recipekeeper.extra.SEARCH_STRING";
 
     public static final String CATEGORY_ID_MESSAGE = "com.example.recipekeeper.extra.CATEGORY_ID";
 
@@ -71,6 +77,24 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Toast.makeText(HomeActivity.this, s, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                intent.putExtra(SEARCH_MESSAGE, s);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -82,10 +106,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.search:
-                Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
-                searchPressed();
-                break;
+//            case R.id.search:
+//                Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
+//                searchPressed();
+//                break;
             case R.id.help:
                 helpPressed();
                 break;
