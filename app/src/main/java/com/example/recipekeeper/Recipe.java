@@ -25,6 +25,25 @@ public class Recipe {
         position = _pos;
     }
 
+    public static List<Recipe> searchFor(String term) {
+        ArrayList<Recipe> results = new ArrayList<>();
+        term = term.toLowerCase();
+        for (Recipe r : getRecipeList(DBHelper.FILTER.ALL)) {
+            if (r.getName().toLowerCase().contains(term)) {
+                results.add(r);
+            }
+            else {
+                for (Category c : r.getCategories()) {
+                    if (c.getName().toLowerCase().contains(term)) {
+                        results.add(r);
+                    }
+                }
+            }
+        }
+
+        return results;
+    }
+
     public int getID()
     {
         return id;

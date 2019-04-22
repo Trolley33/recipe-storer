@@ -46,6 +46,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.recipekeeper.HomeActivity" />
         </activity>
+        <activity android:name=".SearchActivity" />
 
         <service android:name=".TimerService"
             android:exported="false"/>
