@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -121,11 +122,43 @@ public class RecipeActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.edit_name:
+                editPressed();
+                break;
             case R.id.delete:
                 deletePressed();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void editPressed()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter New Recipe Title");
+
+        final EditText input = new EditText(this);
+        input.setText(selectedRecipe.getName());
+        builder.setView(input);
+
+        builder.setPositiveButton("Set Name", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String newName = input.getText().toString();
+                selectedRecipe.setName(newName);
+                getSupportActionBar().setTitle(newName);
+                setShareValues();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     void deletePressed()

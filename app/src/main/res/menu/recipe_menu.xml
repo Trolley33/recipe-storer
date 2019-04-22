@@ -3,14 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/action_share"
-        android:title="Share Recipe"
+        app:showAsAction="never"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
+        android:title="Share Recipe"/>
+
+    <item
+        android:id="@+id/edit_name"
+        android:icon="@drawable/ic_baseline_edit_24px"
         app:showAsAction="ifRoom"
-        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+        android:title="Edit Recipe Name" />
 
     <item
         android:id="@+id/delete"
         android:icon="@drawable/ic_baseline_delete_24px"
         app:showAsAction="ifRoom"
-        android:title="Delete" />
+        android:title="Delete Recipe" />
 
 </menu>

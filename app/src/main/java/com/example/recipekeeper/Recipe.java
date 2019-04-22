@@ -155,4 +155,9 @@ public class Recipe {
         }
         return null;
     }
+
+    public void setName(String _name) {
+        this.name = _name;
+        updateRecipe();
+    }
 }
