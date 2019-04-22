@@ -1,13 +1,24 @@
 package com.example.recipekeeper;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +33,7 @@ import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 /**
@@ -46,7 +58,6 @@ public class RecipeOverviewFragment extends Fragment {
     public RecipeOverviewFragment() {
     }
 
-    // TODO: Customize parameter initialization
     public static RecipeOverviewFragment newInstance(int columnCount) {
         RecipeOverviewFragment fragment = new RecipeOverviewFragment();
         Bundle args = new Bundle();
@@ -83,6 +94,7 @@ public class RecipeOverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
+        createNotificationChannels();
         final View view = inflater.inflate(R.layout.fragment_recipe_overview, container, false);
         final Context context = view.getContext();
 
@@ -202,7 +214,35 @@ public class RecipeOverviewFragment extends Fragment {
                 refreshText(view);
             }
         });
+        final double time = t;
+        time_display.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTimer(time);
+            }
+        });
         return view;
+    }
+
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "channel",
+                    "Recipe Channel",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+
+            channel.setDescription("Recipe Notification Channel");
+
+            NotificationManager manager = getContext().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+    }
+
+    void startTimer(double minutes) {
+        Intent intent = new Intent(getContext(), TimerService.class);
+        intent.putExtra("SECONDS", (int) (minutes*60));
+        getContext().startService(intent);
     }
 
     void editCategories (View root)

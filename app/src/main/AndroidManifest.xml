@@ -15,7 +15,7 @@
             android:name=".IngredientsContentProvider"
             android:authorities="com.example.recipekeeper.own.PROVIDER"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true"/>
 
         <activity
             android:name=".HomeActivity"
@@ -46,6 +46,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.recipekeeper.HomeActivity" />
         </activity>
+
+        <service android:name=".TimerService"
+            android:exported="false"/>
+
     </application>
 
 </manifest>
