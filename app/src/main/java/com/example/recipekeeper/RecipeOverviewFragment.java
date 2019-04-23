@@ -102,6 +102,8 @@ public class RecipeOverviewFragment extends Fragment {
         final TextView time_display = view.findViewById(R.id.time);
 
         // Calculate time for recipe to finish.
+        setMethod(Method.getMethodList(selectedRecipe.getID()));
+        
         double t = 0;
         for (Method step : method) {
             t += step.getTime();
