@@ -1,6 +1,5 @@
 package com.example.recipekeeper;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -123,7 +122,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     void helpPressed() {
-        showMessage("TODO", "Run help function.");
+        Intent intent = new Intent(this, UserGuideActivity.class);
+
+        this.startActivity(intent);
     }
 
     void showMessage (String title, String message)
