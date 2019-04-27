@@ -17,6 +17,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * A fragment representing a list of Items.
@@ -35,6 +36,7 @@ public class RecipeIngredientsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Ingredient> ingredientsList;
     private IngredientAdapter adapter;
+    RecipeActivity parent;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -105,6 +107,10 @@ public class RecipeIngredientsFragment extends Fragment {
         return view;
     }
 
+    void setParent(RecipeActivity _parent) {
+        parent = _parent;
+    }
+
     void attachItemTouchHelper ()
     {
         // Extend the Callback class
@@ -143,6 +149,8 @@ public class RecipeIngredientsFragment extends Fragment {
         ingredientsList.clear();
         ingredientsList.addAll(Ingredient.getIngredientList(selectedRecipe.getID()));
         adapter.notifyDataSetChanged();
+
+        parent.setShareValues();
     }
 
     public void addIngredient(View view)
