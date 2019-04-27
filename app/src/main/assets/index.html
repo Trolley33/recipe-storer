@@ -7,7 +7,12 @@
     <style>
         .slide {display:none;}
         .w3-left, .w3-right, .w3-badge {cursor:pointer}
-        .w3-badge {height:18px;width: 18px;margin:3px;}
+        .w3-badge {
+            height:14px;
+            width: 14px;
+            margin:2px;
+            padding: 0;
+        }
     </style>
 </head>
 <body class="w3-light-gray">
@@ -16,22 +21,24 @@
     <div class="w3-card-4 w3-center w3-margin w3-padding-large w3-round w3-border w3-display-container">
         <div class="slide">
             <header class="w3-container">
-                <h1>Home Page</h1>
+                <h2>Home Page</h2>
                 <hr/>
             </header>
             <img src="images/home_screen.jpg" alt="App Home Screen" style="width: 80%" class="w3-border w3-round">
             <div class="w3-container w3-center">
-                <p>This user guide will show you how to use this app correctly, and show you the different features you can take advantage of.</p>
+                <p>This user guide will show you how to use this app correctly, and show you the
+                    different features you can take advantage of.
+                </p>
             </div>
         </div>
-        <!-- TODO: change images -->
+
         <div class="slide">
             <header class="w3-container">
-                <h1>Adding a New Recipe</h1>
+                <h2>Adding a New Recipe</h2>
                 <hr/>
             </header>
-            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
             <div class="w3-container w3-center">
+                <img src="images/add_recipe.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
                 <p>
                     Adding a new recipe couldn't be simpler! By selecting the &plus; button
                     from the lower right corner of the home screen, you can add a
@@ -41,15 +48,16 @@
                     pencil icon in the top right corner, and modify the recipe's name. To delete a
                     recipe press the 'bin' icon in the top right corner of this screen.
                 </p>
+                <img src="images/manage_recipe.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
             </div>
         </div>
 
         <div class="slide">
             <header class="w3-container">
-                <h1>Organising Recipes</h1>
+                <h2>Organising Recipes</h2>
                 <hr/>
             </header>
-            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+
             <div class="w3-container w3-center">
                 <p>
                     To keep recipes organised there are a few tools to help. The simplest way is to re-order the
@@ -60,6 +68,8 @@
                     By pressing the star next to your favourite recipes, they will be sorted away into
                     the 'Favourites' tab, where only favourited recipes will show up. To unfavourite a recipe,
                     simply press the star icon again.
+                    <br/>
+                    <img src="images/organise_recipe.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
                     <br/><br/>
                     You can also organise your recipes into categories, which we'll talk about later.
                 </p>
@@ -68,10 +78,10 @@
 
         <div class="slide">
             <header class="w3-container">
-                <h1>Adding a New Category</h1>
+                <h2>Adding a New Category</h2>
                 <hr/>
             </header>
-            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <img src="images/add_category.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
             <div class="w3-container w3-center">
                 <p>
                     Adding a category is almost exactly the same as adding a recipe. Navigate to the 'Category' tab from
@@ -81,28 +91,33 @@
                     pencil icon in the top right corner, and modify the category's name. To delete a
                     category press the 'bin' icon in the top right corner of this screen.
                 </p>
+                <img src="images/manage_category.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
             </div>
         </div>
 
         <div class="slide">
             <header class="w3-container">
-                <h1>Adding Categories to a Recipe</h1>
+                <h2>Editing a Recipe's Info</h2>
                 <hr/>
             </header>
-            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <img src="images/edit_recipe.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
             <div class="w3-container w3-center">
                 <p>
+                    To edit information about a recipe, enter 'edit' mode by tapping the pencil
+                    icon in the bottom right.
+                    <br/><br/>
+                    You can edit the overview text of a recipe by typing into the text box to act
+                    as a description for the recipe.
+                    <br/><br/>
                     To aid organisation further, recipes can be grouped into categories.
                     These categories can be anything you choose, as each recipe can have multiple
                     categories, and visa-versa.
                     <br/><br/>
-                    To add an existing category to a recipe, go into
-                    'edit' mode by press the pencil icon in the bottom right.
-                    This triggers certain elements to now be editable.
-                    <br/><br/>
                     If you tap the categories list (which should be
                     'none' if you haven't added any yet) a popup menu will appear where you can
-                    mark all the categories you want this recipe to be in. When you're done editing,
+                    mark all the categories you want this recipe to be in.
+                    <br/><br/>
+                    When you're done editing,
                     press 'done' and tap the save icon in the bottom right.
                 </p>
             </div>
@@ -110,14 +125,15 @@
 
         <div class="slide">
             <header class="w3-container">
-                <h1>Adding Ingredients to a Recipe</h1>
+                <h2>Adding Ingredients to a Recipe</h2>
                 <hr/>
             </header>
-            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <img src="images/add_ingredient.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
             <div class="w3-container w3-center">
                 <p>
                     Adding ingredients to a recipe is as simple as adding a new recipe. Navigate to
                     the 'Ingredients' tab after selecting a recipe from the homepage (or category list/favourites).
+                    <br/><br/>
                     From here press the &plus; icon to open a popup menu, and enter the ingredient's name as well
                     as the amount for the recipe.
                     <br/><br/>
@@ -132,14 +148,15 @@
 
         <div class="slide">
             <header class="w3-container">
-                <h1>Adding Method to a Recipe</h1>
+                <h2>Adding Method to a Recipe</h2>
                 <hr/>
             </header>
-            <img src="images/home_screen.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <img src="images/add_step.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
             <div class="w3-container w3-center">
                 <p>
                     Adding steps to a recipe's method is similar to adding ingredients. Navigate to
                     the 'Method' tab after selecting a recipe from the homepage (or category list/favourites).
+                    <br/><br/>
                     From here press the &plus; icon to open a popup menu, and enter the step's description as well
                     as the amount of time to complete it. This allows the app to estimate how long a recipe will take,
                     and set a timer for you.
@@ -154,6 +171,41 @@
             </div>
         </div>
 
+        <div class="slide">
+            <header class="w3-container">
+                <h2>Timing a Recipe</h2>
+                <hr/>
+            </header>
+            <img src="images/time_recipe.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <div class="w3-container w3-center">
+                <p>
+                    By adding time to each step of the recipe, it allows a timer to be started for each recipe.
+                    Navigate to a recipe with an existing method, and tap on the 'Time:' row to start a timer
+                    for the current recipe.
+                    <br/><br/>
+                    The timer will count down in your notifications and send another notification
+                    when the recipe should be complete.
+                </p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <header class="w3-container">
+                <h2>Searching for a Recipe</h2>
+                <hr/>
+            </header>
+            <img src="images/search_recipe.jpg" alt="Different Image" style="width: 80%" class="w3-border w3-round">
+            <div class="w3-container w3-center">
+                <p>
+                    Looking for a recipe you've already added is super simple! If you've already tried
+                    rearranging and utilising favourites but you're still struggling to find the
+                    recipe you want, tap the search icon from the home screen and enter a search term.
+                    <br/><br/>
+                    From here any recipe with a matching title or category will be displayed similarly
+                    to the regular recipe list.
+                </p>
+            </div>
+        </div>
 
         <br />
         <div id="footer" class="w3-center w3-display-bottommiddle" style="width:100%">
@@ -178,19 +230,25 @@
     });
 
     function currentDiv(index) {
+        prev_slide = current_slide;
         current_slide = index;
         var slides = $('.slide');
         var badges = $('.w3-badge');
 
         slides.each(function (i, e) {
             if (i === index) {
-                $(e).show();
+                $(e).slideDown();
+            }
+            else if (i === prev_slide) {
+                $(e).slideUp();
             }
             else
             {
                 $(e).hide();
             }
         });
+
+        window.scrollTo(0, 0);
 
         badges.each(function (i, e) {
            if (i === index) {
