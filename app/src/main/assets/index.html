@@ -178,19 +178,25 @@
     });
 
     function currentDiv(index) {
+        prev_slide = current_slide;
         current_slide = index;
         var slides = $('.slide');
         var badges = $('.w3-badge');
 
         slides.each(function (i, e) {
             if (i === index) {
-                $(e).show();
+                $(e).slideDown();
+            }
+            else if (i === prev_slide) {
+                $(e).slideUp();
             }
             else
             {
                 $(e).hide();
             }
         });
+
+        window.scrollTo(0, 0);
 
         badges.each(function (i, e) {
            if (i === index) {
