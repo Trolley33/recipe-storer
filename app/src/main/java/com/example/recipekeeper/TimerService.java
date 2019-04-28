@@ -44,7 +44,7 @@ public class TimerService extends Service {
                 builder
                         .setChannelId("channel")
                         .setContentTitle("Time Remaining")
-                        .setSmallIcon(R.drawable.ic_baseline_star_24px) // possibly replace with hourglass?
+                        .setSmallIcon(R.drawable.ic_baseline_hourglass_empty_24px) // possibly replace with hourglass?
                         .setOnlyAlertOnce(true);
                 firstTime = false;
             }
@@ -69,7 +69,7 @@ public class TimerService extends Service {
                 Notification notification = builder
                         .setChannelId("channel")
                         .setContentTitle("Recipe Storer")
-                        .setSmallIcon(R.drawable.ic_baseline_star_24px) // possibly replace with hourglass?
+                        .setSmallIcon(R.drawable.ic_baseline_hourglass_empty_24px) // possibly replace with hourglass?
                         .setOnlyAlertOnce(false)
                         .setContentText("Timer Complete!")
                         .build();

@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,6 +101,7 @@ public class RecipeOverviewFragment extends Fragment {
 
         // Get time display
         final TextView time_display = view.findViewById(R.id.time);
+        final ImageButton hour_glass_button = view.findViewById(R.id.hourglass);
 
         // Calculate time for recipe to finish.
         setMethod(Method.getMethodList(selectedRecipe.getID()));
@@ -217,12 +219,13 @@ public class RecipeOverviewFragment extends Fragment {
             }
         });
         final double time = t;
-        time_display.setOnClickListener(new View.OnClickListener() {
+        hour_glass_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startTimer(time);
             }
         });
+
         return view;
     }
 
