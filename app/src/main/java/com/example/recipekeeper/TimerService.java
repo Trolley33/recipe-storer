@@ -56,7 +56,7 @@ public class TimerService extends Service {
 
         // Delete previous notification
         notificationManager.cancel(0);
-        controls.setTextViewText(R.id.step_text, "Step: blah blah");
+        controls.setTextViewText(R.id.step_text, "Current Step: blah blah");
         controls.setTextViewText(R.id.time_text, "Time Remaining: 01:12");
 
         controls.setImageViewResource(R.id.previous_step, R.drawable.ic_baseline_skip_previous_24px);
@@ -89,14 +89,20 @@ public class TimerService extends Service {
                 firstTime = false;
             }
 
+            // Set current step string
+
+            controls.setTextViewText(R.id.step_text, "Current Step: " + "test");
+
+            // Set time remaining string
             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
             Date date = new Date((long) (seconds*1000));
             String formattedTime = dateFormat.format(date);
 
+            controls.setTextViewText(R.id.time_text, "Time Remaining: " + formattedTime);
+
             Notification notification = builder
-                    .setContentText(formattedTime)
                     .build();
 
             notificationManager.notify(0, notification);

@@ -12,8 +12,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="0dp"
         android:gravity="start"
@@ -44,8 +44,8 @@
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="-4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:layout_marginBottom="-4dp"
         android:layout_toStartOf="@+id/play_pause"
         android:layout_toLeftOf="@+id/play_pause" />
@@ -58,8 +58,8 @@
         android:layout_alignBottom="@+id/time_text"
         android:layout_gravity="end"
         android:layout_marginTop="-4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:layout_marginBottom="-4dp"
         android:layout_toStartOf="@+id/next_step"
         android:layout_toLeftOf="@+id/next_step" />
@@ -74,8 +74,8 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="end"
         android:layout_marginTop="-4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:layout_marginBottom="-4dp" />
 
 </RelativeLayout>
