@@ -222,7 +222,7 @@ public class RecipeOverviewFragment extends Fragment {
         hour_glass_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startTimer(time);
+                startTimer();
             }
         });
 
@@ -244,9 +244,9 @@ public class RecipeOverviewFragment extends Fragment {
         }
     }
 
-    void startTimer(double minutes) {
+    void startTimer() {
         Intent intent = new Intent(getContext(), TimerService.class);
-        intent.putExtra("SECONDS", (int) (minutes*60));
+        intent.putExtra("RECIPE_ID", selectedRecipe.getID());
         getContext().startService(intent);
     }
 
