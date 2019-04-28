@@ -23,11 +23,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Time:"
+        android:text="Time\n(mins):"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/time_edit"
+        app:layout_constraintStart_toStartOf="@+id/step_textview"
         app:layout_constraintTop_toBottomOf="@+id/step_textview" />
 
     <EditText
@@ -36,19 +34,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@+id/step_textview"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/time_textview"
+        app:layout_constraintTop_toTopOf="@+id/step_textview" />
 
     <EditText
         android:id="@+id/time_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="@+id/step_edit"
-        app:layout_constraintTop_toBottomOf="@+id/step_textview" />
+        app:layout_constraintTop_toTopOf="@+id/time_textview" />
 </android.support.constraint.ConstraintLayout>
