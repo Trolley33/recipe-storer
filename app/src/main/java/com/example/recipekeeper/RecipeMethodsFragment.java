@@ -158,7 +158,7 @@ public class RecipeMethodsFragment extends Fragment {
     public void addMethod(View view)
     {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Add new ingredient");
+        builder.setTitle("Add new step");
 
         View v = getLayoutInflater().inflate(R.layout.add_method_popup, null);
 

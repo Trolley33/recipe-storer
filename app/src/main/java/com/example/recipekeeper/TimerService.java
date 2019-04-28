@@ -21,7 +21,10 @@ public class TimerService extends Service {
     public TimerService () {
     }
 
+    private boolean isRunning = false;
+
     private Notification.Builder builder;
+    private NotificationManagerCompat notificationManager;
     private boolean firstTime = true;
 
     int secondsRemaining;
@@ -35,10 +38,10 @@ public class TimerService extends Service {
     @Override
     public void onCreate() {
         builder = new Notification.Builder(this);
+        notificationManager = NotificationManagerCompat.from(this);
     }
 
     public void sendTimerNotification(int seconds) {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             if (firstTime) {
                 builder
@@ -64,7 +67,6 @@ public class TimerService extends Service {
     }
 
     private void sendFinishedNotification() {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 Notification notification = builder
                         .setChannelId("channel")
@@ -80,8 +82,15 @@ public class TimerService extends Service {
 
     @Override
     public void onStart(Intent intent, int startId) {
+        if (isRunning)
+            return;
+
+        isRunning = true;
         secondsRemaining = intent.getExtras().getInt("SECONDS");
-        // For time consuming an long tasks you can launch a new thread here...
+
+        // Delete previous notification
+        notificationManager.cancel(0);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -96,6 +105,7 @@ public class TimerService extends Service {
 
     @Override
     public void onDestroy() {
+        isRunning = false;
         sendFinishedNotification();
     }
 }
