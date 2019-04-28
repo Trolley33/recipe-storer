@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/step_text"
+        style="@style/TextAppearance.Compat.Notification.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="start"
+        tools:text="Example" />
+
+    <TextView
+        android:id="@+id/time_text"
+        style="@style/TextAppearance.Compat.Notification.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/step_text"
+        android:layout_alignStart="@+id/step_text"
+        android:layout_alignLeft="@+id/step_text"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="start"
+        tools:text="Test" />
+
+    <ImageButton
+        android:id="@+id/previous_step"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/step_text"
+        android:layout_alignBottom="@+id/time_text"
+        android:layout_gravity="end"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="-4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="-4dp"
+        android:layout_toStartOf="@+id/play_pause"
+        android:layout_toLeftOf="@+id/play_pause" />
+
+    <ImageButton
+        android:id="@+id/play_pause"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/step_text"
+        android:layout_alignBottom="@+id/time_text"
+        android:layout_gravity="end"
+        android:layout_marginTop="-4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="-4dp"
+        android:layout_toStartOf="@+id/next_step"
+        android:layout_toLeftOf="@+id/next_step" />
+
+    <ImageButton
+        android:id="@+id/next_step"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/step_text"
+        android:layout_alignBottom="@+id/time_text"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="-4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="-4dp" />
+
+</RelativeLayout>
