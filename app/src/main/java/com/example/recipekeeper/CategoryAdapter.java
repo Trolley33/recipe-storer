@@ -19,61 +19,77 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         categories = _categories;
     }
 
+    /**
+     * Called when view holder is created.
+     */
     @NonNull
     @Override
     public CategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
+        // Inflate view with custom layout.
         View categoryView = inflater.inflate(R.layout.item_category, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(categoryView);
-        return viewHolder;
+        return new ViewHolder(categoryView);
     }
 
+    /**
+     * When this is bound to it's parent.
+     */
     @Override
-    public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder parent, int i) {
+        // Get the category represented by this adapter.
         final Category category = categories.get(i);
 
-        ConstraintLayout layout = viewHolder.layout;
-        final Context context = viewHolder.context;
+        // Retrieve UI elements from parent.
+        final ConstraintLayout layout = parent.layout;
+        final Context context = parent.context;
+        final TextView nameTextView = parent.nameTextView;
+        final TextView countTextView = parent.countTextView;
 
-        TextView nameTextView = viewHolder.nameTextView;
-        TextView countTextView = viewHolder.countTextView;
-
+        // Set values of text view to match this category's information.
         nameTextView.setText(category.getName());
         countTextView.setText(String.format("%d Recipes", category.getRecipeCount()));
 
+        // When the row is clicked.
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create intent for opening category list.
                 Intent intent = new Intent(context, CategoryListActivity.class);
-
+                // Put category's ID as extra, to be used later.
                 intent.putExtra(HomeActivity.CATEGORY_ID_MESSAGE, category.getID());
                 context.startActivity(intent);
             }
         });
     }
 
+    /**
+     * Number of items this adapter will display.
+     * @return size of category list.
+     */
     @Override
     public int getItemCount() {
         return categories.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Sets member variables for each view holder.
+     */
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
         TextView countTextView;
-
         ConstraintLayout layout;
         Context context;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
 
             super(itemView);
-            layout = (ConstraintLayout) itemView.findViewById(R.id.layout);
+            layout = itemView.findViewById(R.id.layout);
             context = itemView.getContext();
-            nameTextView = (TextView) itemView.findViewById(R.id.category_name);
-            countTextView = (TextView) itemView.findViewById(R.id.category_count);
+            nameTextView = itemView.findViewById(R.id.category_name);
+            countTextView = itemView.findViewById(R.id.category_count);
         }
     }
 }
