@@ -2,18 +2,17 @@ package com.example.recipekeeper;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -21,19 +20,16 @@ import android.widget.EditText;
 
 import java.util.List;
 
-public class RecipeActivity extends AppCompatActivity
-{
+public class RecipeActivity extends AppCompatActivity {
 
+    ShareActionProvider myShareActionProvider;
+    Intent myShareIntent;
+    Recipe selectedRecipe;
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    ShareActionProvider myShareActionProvider;
-    Intent myShareIntent;
-
-    Recipe selectedRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,13 +81,13 @@ public class RecipeActivity extends AppCompatActivity
         result.append(String.format("Recipe: %s\n\n", selectedRecipe.getName()));
 
         result.append("Ingredients:\n");
-        for(Ingredient ingredient : ingredients) {
+        for (Ingredient ingredient : ingredients) {
             result.append(String.format("• %s - %s\n", ingredient.getDescription(), ingredient.getAmount()));
         }
 
         result.append("\nMethod:\n");
-        for(Method step : steps) {
-            result.append(String.format("%d. %s - %.2f mins\n", step.getPosition()+1, step.getStep(), step.getTime()));
+        for (Method step : steps) {
+            result.append(String.format("%d. %s - %.2f mins\n", step.getPosition() + 1, step.getStep(), step.getTime()));
         }
 
         return result.toString();
@@ -99,6 +95,7 @@ public class RecipeActivity extends AppCompatActivity
 
     /**
      * Add custom menu items to action bar.
+     *
      * @param menu automatically generated menu
      * @return if action was successful.
      */
@@ -116,6 +113,7 @@ public class RecipeActivity extends AppCompatActivity
 
     /**
      * Run method based on which menu item was selected.
+     *
      * @param item menu item selected
      * @return if action was successful.
      */
@@ -132,8 +130,7 @@ public class RecipeActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    void editPressed()
-    {
+    void editPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter New Recipe Title");
 
@@ -161,8 +158,7 @@ public class RecipeActivity extends AppCompatActivity
         builder.show();
     }
 
-    void deletePressed()
-    {
+    void deletePressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle("Really Delete Recipe?");
@@ -186,8 +182,7 @@ public class RecipeActivity extends AppCompatActivity
         builder.show();
     }
 
-    void showMessage (String title, String message)
-    {
+    void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(title);
@@ -207,8 +202,7 @@ public class RecipeActivity extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-            switch (position)
-            {
+            switch (position) {
                 case 0:
                     RecipeOverviewFragment view_fragment = new RecipeOverviewFragment();
                     view_fragment.setSelectedRecipe(selectedRecipe);

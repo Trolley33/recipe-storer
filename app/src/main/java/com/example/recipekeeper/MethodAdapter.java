@@ -15,13 +15,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder>
-{
+public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder> {
     private List<Method> methods;
     private RecipeMethodsFragment fragment;
 
-    public MethodAdapter(List<Method> _methods, RecipeMethodsFragment _fragment)
-    {
+    public MethodAdapter(List<Method> _methods, RecipeMethodsFragment _fragment) {
         methods = _methods;
         fragment = _fragment;
     }
@@ -44,7 +42,7 @@ public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder
         final Method method = methods.get(i);
 
         TextView posTextView = viewHolder.posTextView;
-        posTextView.setText(String.format("%d.", i+1));
+        posTextView.setText(String.format("%d.", i + 1));
 
         TextView stepTextView = viewHolder.stepTextView;
         stepTextView.setText(method.getStep());
@@ -73,8 +71,7 @@ public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder
         });
     }
 
-    public void editMethod(View view, final Method method)
-    {
+    public void editMethod(View view, final Method method) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle("Edit Method");
 
@@ -107,8 +104,7 @@ public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder
         builder.show();
     }
 
-    public void deleteMethod(View view, final Method method)
-    {
+    public void deleteMethod(View view, final Method method) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle("Delete Method");
 
@@ -154,7 +150,7 @@ public class MethodAdapter extends RecyclerView.Adapter<MethodAdapter.ViewHolder
             super(itemView);
             context = itemView.getContext();
 
-            layout =  itemView.findViewById(R.id.layout);
+            layout = itemView.findViewById(R.id.layout);
 
             posTextView = itemView.findViewById(R.id.method_position);
             stepTextView = itemView.findViewById(R.id.method_step);

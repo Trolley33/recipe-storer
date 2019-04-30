@@ -1,7 +1,7 @@
 package com.example.recipekeeper;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
@@ -11,6 +11,7 @@ import android.webkit.WebViewClient;
 public class UserGuideActivity extends AppCompatActivity {
 
     WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

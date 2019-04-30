@@ -1,12 +1,8 @@
 package com.example.recipekeeper;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,13 +10,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,33 +20,25 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * A fragment representing a list of Items.
  * <p/>
-
+ * <p>
  * interface.
  */
 public class RecipeOverviewFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    RecipeActivity parent;
     private Recipe selectedRecipe;
     // TODO: Customize parameters
     private int mColumnCount = 1;
-
     private ArrayList<Category> categories;
     private ArrayList<Method> method;
-
-    RecipeActivity parent;
 
     public RecipeOverviewFragment() {
     }
@@ -67,18 +51,15 @@ public class RecipeOverviewFragment extends Fragment {
         return fragment;
     }
 
-    public void setCategories(ArrayList<Category> _categories)
-    {
+    public void setCategories(ArrayList<Category> _categories) {
         categories = _categories;
     }
 
-    public void setMethod(ArrayList<Method> _method)
-    {
+    public void setMethod(ArrayList<Method> _method) {
         method = _method;
     }
 
-    public void setSelectedRecipe(Recipe recipe)
-    {
+    public void setSelectedRecipe(Recipe recipe) {
         selectedRecipe = recipe;
     }
 
@@ -105,7 +86,7 @@ public class RecipeOverviewFragment extends Fragment {
 
         // Calculate time for recipe to finish.
         setMethod(Method.getMethodList(selectedRecipe.getID()));
-        
+
         double t = 0;
         for (Method step : method) {
             t += step.getTime();
@@ -118,16 +99,13 @@ public class RecipeOverviewFragment extends Fragment {
         // No categories -> None
         if (categories.size() == 0) {
             categories_content.setText("None");
-        }
-        else
-        {
+        } else {
             // <= 3 categories -> C1, C2, C3
             if (categories.size() <= 3) {
                 StringBuilder text = new StringBuilder();
                 for (int i = 0; i < categories.size(); i++) {
                     text.append(categories.get(i).getName());
-                    if (i != categories.size() - 1)
-                    {
+                    if (i != categories.size() - 1) {
                         text.append(", ");
                     }
                 }
@@ -162,8 +140,7 @@ public class RecipeOverviewFragment extends Fragment {
 
         edit_fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 // Hide text box, show edit box.
                 overviewTextView.setVisibility(View.INVISIBLE);
                 overviewEditText.setVisibility(View.VISIBLE);
@@ -180,8 +157,7 @@ public class RecipeOverviewFragment extends Fragment {
                 });
 
                 // Grab focus onto overview edit field.
-                if (overviewEditText.requestFocus())
-                {
+                if (overviewEditText.requestFocus()) {
                     InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(overviewEditText, InputMethodManager.SHOW_IMPLICIT);
                 }
@@ -193,8 +169,7 @@ public class RecipeOverviewFragment extends Fragment {
 
         save_fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 // Hide edit box, show text box.
                 overviewTextView.setVisibility(View.VISIBLE);
                 overviewEditText.setVisibility(View.INVISIBLE);
@@ -250,8 +225,7 @@ public class RecipeOverviewFragment extends Fragment {
         getContext().startService(intent);
     }
 
-    void editCategories (View root)
-    {
+    void editCategories(View root) {
         final View r = root;
         final AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
 
@@ -265,15 +239,12 @@ public class RecipeOverviewFragment extends Fragment {
         final int[] cat_ids = new int[allCategories.size()];
         final boolean[] cat_bools = new boolean[allCategories.size()];
 
-        for (int i = 0; i < allCategories.size(); i++)
-        {
+        for (int i = 0; i < allCategories.size(); i++) {
             cat_strings[i] = allCategories.get(i).getName();
             cat_ids[i] = allCategories.get(i).getID();
-            for (int j = 0; j < categories.size(); j++)
-            {
+            for (int j = 0; j < categories.size(); j++) {
                 // Log.e("Recipe:",
-                if (categories.get(j).getID() == allCategories.get(i).getID())
-                {
+                if (categories.get(j).getID() == allCategories.get(i).getID()) {
                     cat_bools[i] = true;
                     break;
                 }
@@ -290,14 +261,10 @@ public class RecipeOverviewFragment extends Fragment {
         builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                for (int i = 0; i < cat_strings.length; i++)
-                {
-                    if (cat_bools[i])
-                    {
+                for (int i = 0; i < cat_strings.length; i++) {
+                    if (cat_bools[i]) {
                         selectedRecipe.addCategory(cat_ids[i]);
-                    }
-                    else
-                    {
+                    } else {
                         selectedRecipe.removeCategory(cat_ids[i]);
                     }
                 }
@@ -314,23 +281,19 @@ public class RecipeOverviewFragment extends Fragment {
         builder.show();
     }
 
-    void refreshText(View v)
-    {
+    void refreshText(View v) {
         // Get category display.
         final TextView categories_content = v.findViewById(R.id.categories_content);
         // No categories -> None
         if (categories.size() == 0) {
             categories_content.setText("None");
-        }
-        else
-        {
+        } else {
             // <= 3 categories -> C1, C2, C3
             if (categories.size() <= 3) {
                 StringBuilder text = new StringBuilder();
                 for (int i = 0; i < categories.size(); i++) {
                     text.append(categories.get(i).getName());
-                    if (i != categories.size() - 1)
-                    {
+                    if (i != categories.size() - 1) {
                         text.append(", ");
                     }
                 }
@@ -355,6 +318,7 @@ public class RecipeOverviewFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+
     @Override
     public void onDetach() {
         super.onDetach();

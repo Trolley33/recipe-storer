@@ -10,16 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>
-{
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private List<Category> categories;
 
-    public CategoryAdapter(List<Category> _categories)
-    {
+    public CategoryAdapter(List<Category> _categories) {
         categories = _categories;
     }
 
@@ -49,13 +45,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         countTextView.setText(String.format("%d Recipes", category.getRecipeCount()));
 
         layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-            Intent intent = new Intent(context, CategoryListActivity.class);
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CategoryListActivity.class);
 
-            intent.putExtra(HomeActivity.CATEGORY_ID_MESSAGE, category.getID());
-            context.startActivity(intent);
-                    }
+                intent.putExtra(HomeActivity.CATEGORY_ID_MESSAGE, category.getID());
+                context.startActivity(intent);
+            }
         });
     }
 

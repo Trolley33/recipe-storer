@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * A fragment representing a list of Items.
  * <p/>
-
+ * <p>
  * interface.
  */
 public class CategoryFragment extends Fragment {
@@ -73,9 +73,7 @@ public class CategoryFragment extends Fragment {
         if (view instanceof RecyclerView) {
 
             recyclerView = (RecyclerView) view;
-        }
-        else
-        {
+        } else {
             recyclerView = view.findViewById(R.id.recipe_list);
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -95,15 +93,13 @@ public class CategoryFragment extends Fragment {
         return view;
     }
 
-    void refreshCategories(View view)
-    {
+    void refreshCategories(View view) {
         categoryList.clear();
         categoryList.addAll(Category.getCategoryList());
         adapter.notifyDataSetChanged();
     }
 
-    public void addCategory(View view)
-    {
+    public void addCategory(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Enter Category Title");
 
@@ -133,6 +129,7 @@ public class CategoryFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+
     @Override
     public void onDetach() {
         super.onDetach();

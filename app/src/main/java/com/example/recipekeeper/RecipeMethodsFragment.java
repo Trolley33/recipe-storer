@@ -21,22 +21,20 @@ import java.util.List;
 /**
  * A fragment representing a list of Items.
  * <p/>
-
+ * <p>
  * interface.
  */
 public class RecipeMethodsFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    RecipeActivity parent;
     private Recipe selectedRecipe;
     // TODO: Customize parameters
     private int mColumnCount = 1;
-
     private RecyclerView recyclerView;
     private List<Method> methodsList;
     private MethodAdapter adapter;
-
-    RecipeActivity parent;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -55,8 +53,7 @@ public class RecipeMethodsFragment extends Fragment {
         return fragment;
     }
 
-    public void setSelectedRecipe(Recipe recipe)
-    {
+    public void setSelectedRecipe(Recipe recipe) {
         selectedRecipe = recipe;
     }
 
@@ -83,9 +80,7 @@ public class RecipeMethodsFragment extends Fragment {
         if (view instanceof RecyclerView) {
 
             recyclerView = (RecyclerView) view;
-        }
-        else
-        {
+        } else {
             recyclerView = view.findViewById(R.id.method_list);
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -107,8 +102,7 @@ public class RecipeMethodsFragment extends Fragment {
         return view;
     }
 
-    void attachItemTouchHelper ()
-    {
+    void attachItemTouchHelper() {
         // Extend the Callback class
         ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
             // When an item is dragged and dropped.
@@ -147,16 +141,14 @@ public class RecipeMethodsFragment extends Fragment {
         ith.attachToRecyclerView(recyclerView);
     }
 
-    void refreshMethods(View view)
-    {
+    void refreshMethods(View view) {
         methodsList.clear();
         methodsList.addAll(Method.getMethodList(selectedRecipe.getID()));
         adapter.notifyDataSetChanged();
         parent.setShareValues();
     }
 
-    public void addMethod(View view)
-    {
+    public void addMethod(View view) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Add new step");
 
@@ -193,6 +185,7 @@ public class RecipeMethodsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+
     @Override
     public void onDetach() {
         super.onDetach();

@@ -1,10 +1,7 @@
 package com.example.recipekeeper;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,12 +9,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +21,7 @@ import java.util.List;
 /**
  * A fragment representing a list of Items.
  * <p/>
-
+ * <p>
  * interface.
  */
 public class AllRecipesFragment extends Fragment {
@@ -80,9 +75,7 @@ public class AllRecipesFragment extends Fragment {
         if (view instanceof RecyclerView) {
 
             recyclerView = (RecyclerView) view;
-        }
-        else
-        {
+        } else {
             recyclerView = view.findViewById(R.id.recipe_list);
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -104,8 +97,7 @@ public class AllRecipesFragment extends Fragment {
         return view;
     }
 
-    void attachItemTouchHelper ()
-    {
+    void attachItemTouchHelper() {
         // Extend the Callback class
         ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
             // When an item is dragged and dropped.
@@ -144,13 +136,11 @@ public class AllRecipesFragment extends Fragment {
         ith.attachToRecyclerView(recyclerView);
     }
 
-    void refreshRecipes(View view)
-    {
+    void refreshRecipes(View view) {
         recipeList.clear();
         // Reset ordering to start at 0.
         ArrayList<Recipe> rList = Recipe.getRecipeList(DBHelper.FILTER.ALL);
-        for (int i = 0; i < rList.size(); i++)
-        {
+        for (int i = 0; i < rList.size(); i++) {
             rList.get(i).setPosition(i);
         }
 
@@ -158,8 +148,7 @@ public class AllRecipesFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    public void addRecipe(View view)
-    {
+    public void addRecipe(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Enter Recipe Title");
 
@@ -189,6 +178,7 @@ public class AllRecipesFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+
     @Override
     public void onDetach() {
         super.onDetach();

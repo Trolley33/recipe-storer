@@ -2,10 +2,8 @@ package com.example.recipekeeper;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,13 +15,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder>
-{
+public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
     private List<Ingredient> ingredients;
     private RecipeIngredientsFragment fragment;
 
-    public IngredientAdapter(List<Ingredient> _ingredients, RecipeIngredientsFragment _fragment)
-    {
+    public IngredientAdapter(List<Ingredient> _ingredients, RecipeIngredientsFragment _fragment) {
         ingredients = _ingredients;
         fragment = _fragment;
     }
@@ -72,8 +68,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         });
     }
 
-    public void editIngredient(View view, final Ingredient ingredient)
-    {
+    public void editIngredient(View view, final Ingredient ingredient) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle("Edit Ingredient");
 
@@ -106,8 +101,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         builder.show();
     }
 
-    public void deleteIngredient(View view, final Ingredient ingredient)
-    {
+    public void deleteIngredient(View view, final Ingredient ingredient) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle("Delete Ingredient");
 
@@ -151,7 +145,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             super(itemView);
             context = itemView.getContext();
 
-            layout =  itemView.findViewById(R.id.layout);
+            layout = itemView.findViewById(R.id.layout);
             descTextView = itemView.findViewById(R.id.ingredient_desc);
             amountTextView = itemView.findViewById(R.id.ingredient_amount);
 

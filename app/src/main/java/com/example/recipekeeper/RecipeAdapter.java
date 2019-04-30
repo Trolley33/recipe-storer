@@ -13,12 +13,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder>
-{
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
     private List<Recipe> recipes;
 
-    public RecipeAdapter(List<Recipe> _recipes)
-    {
+    public RecipeAdapter(List<Recipe> _recipes) {
         recipes = _recipes;
     }
 
@@ -45,12 +43,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         ConstraintLayout layout = viewHolder.layout;
         final Context context = viewHolder.context;
 
-        if (recipe.isFavourite())
-        {
+        if (recipe.isFavourite()) {
             favouriteButton.setBackgroundResource(R.drawable.ic_baseline_star_24px);
-        }
-        else
-        {
+        } else {
             favouriteButton.setBackgroundResource(R.drawable.ic_baseline_star_border_24px);
         }
 

@@ -10,10 +10,7 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
-import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,29 +18,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import static android.app.Notification.EXTRA_NOTIFICATION_ID;
-
 public class TimerService extends Service {
-    public TimerService () {
-    }
-
-    private boolean isRunning = false;
-
-    private Notification.Builder builder;
-    private NotificationManagerCompat notificationManager;
-    private boolean firstTime = true;
-
-    private boolean paused;
-
     RemoteViews controlsSmall;
     RemoteViews controlsBig;
-
-    private BroadcastReceiver receiver;
-
     int recipeID;
     List<Method> steps;
     int currentStep;
     int currentRemaining;
+    private boolean isRunning = false;
+    private Notification.Builder builder;
+    private NotificationManagerCompat notificationManager;
+    private boolean firstTime = true;
+    private boolean paused;
+    private BroadcastReceiver receiver;
+    public TimerService() {
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -103,8 +92,7 @@ public class TimerService extends Service {
         isRunning = true;
         if (intent.hasExtra("RECIPE_ID")) {
             recipeID = intent.getExtras().getInt("RECIPE_ID");
-        }
-        else {
+        } else {
             stopSelf();
             return;
         }
@@ -164,14 +152,11 @@ public class TimerService extends Service {
                     sendTimerNotification();
                     if (currentRemaining <= 0) {
                         currentStep++;
-                        if (currentStep < steps.size())
-                        {
+                        if (currentStep < steps.size()) {
                             currentRemaining = (int) (steps.get(currentStep).getTime() * 60);
                             firstTime = true;
 
-                        }
-                        else
-                        {
+                        } else {
                             break;
                         }
                     }
@@ -196,9 +181,7 @@ public class TimerService extends Service {
                         .setSmallIcon(R.drawable.ic_baseline_hourglass_empty_24px)
                         .setOnlyAlertOnce(false);
                 firstTime = false;
-            }
-            else
-            {
+            } else {
                 builder.setOnlyAlertOnce(true);
             }
 
@@ -211,7 +194,7 @@ public class TimerService extends Service {
             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-            Date date = new Date((long) (currentRemaining*1000));
+            Date date = new Date((long) (currentRemaining * 1000));
             String formattedTime = dateFormat.format(date);
 
             controlsSmall.setTextViewText(R.id.time_text, formattedTime);
@@ -227,15 +210,15 @@ public class TimerService extends Service {
 
     private void sendFinishedNotification() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                Notification notification = builder
-                        .setChannelId("channel")
-                        .setCustomContentView(null)
-                        .setCustomBigContentView(null)
-                        .setContentTitle("Recipe Storer")
-                        .setSmallIcon(R.drawable.ic_baseline_hourglass_empty_24px)
-                        .setOnlyAlertOnce(false)
-                        .setContentText("Timer Complete!")
-                        .build();
+            Notification notification = builder
+                    .setChannelId("channel")
+                    .setCustomContentView(null)
+                    .setCustomBigContentView(null)
+                    .setContentTitle("Recipe Storer")
+                    .setSmallIcon(R.drawable.ic_baseline_hourglass_empty_24px)
+                    .setOnlyAlertOnce(false)
+                    .setContentText("Timer Complete!")
+                    .build();
 
             notificationManager.notify(1, notification);
         }
@@ -265,8 +248,7 @@ public class TimerService extends Service {
         if (paused) {
             controlsSmall.setImageViewResource(R.id.play_pause, R.drawable.ic_baseline_play_arrow_24px);
             controlsBig.setImageViewResource(R.id.play_pause, R.drawable.ic_baseline_play_arrow_24px);
-        }
-        else {
+        } else {
             controlsSmall.setImageViewResource(R.id.play_pause, R.drawable.ic_baseline_pause_24px);
             controlsBig.setImageViewResource(R.id.play_pause, R.drawable.ic_baseline_pause_24px);
         }
