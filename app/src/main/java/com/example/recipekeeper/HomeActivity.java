@@ -81,7 +81,6 @@ public class HomeActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Toast.makeText(HomeActivity.this, s, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                 intent.putExtra(SEARCH_MESSAGE, s);
                 startActivity(intent);
