@@ -91,7 +91,7 @@ public class RecipeActivity extends AppCompatActivity
 
         result.append("\nMethod:\n");
         for(Method step : steps) {
-            result.append(String.format("%d. %s\n", step.getPosition()+1, step.getStep()));
+            result.append(String.format("%d. %s - %.2f mins\n", step.getPosition()+1, step.getStep(), step.getTime()));
         }
 
         return result.toString();
