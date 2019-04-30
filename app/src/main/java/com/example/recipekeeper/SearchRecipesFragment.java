@@ -74,6 +74,10 @@ public class SearchRecipesFragment extends Fragment {
         recipeList.addAll(Recipe.searchFor(((SearchActivity) getActivity()).getSearchTerm()));
         adapter.notifyDataSetChanged();
 
+        // Hide floating action button from view.
+        FloatingActionButton fab = view.findViewById(R.id.edit_fab);
+        fab.hide();
+
         return view;
     }
 
