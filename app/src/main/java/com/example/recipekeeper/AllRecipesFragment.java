@@ -3,6 +3,7 @@ package com.example.recipekeeper;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -19,86 +20,73 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * <p>
- * interface.
+ * A fragment for listing recipes.
  */
 public class AllRecipesFragment extends Fragment {
-
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
 
     private RecyclerView recyclerView;
     private List<Recipe> recipeList;
     private RecipeAdapter adapter;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Mandatory empty constructor for the fragment manager to
+     * instantiate the fragment (e.g. upon screen orientation changes).
      */
     public AllRecipesFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static AllRecipesFragment newInstance(int columnCount) {
-        AllRecipesFragment fragment = new AllRecipesFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    /**
+     * Called when fragment is created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Instantiate method variables.
         recipeList = new ArrayList<>();
         adapter = new RecipeAdapter(recipeList);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
+    /**
+     * Called when view is created.
+     * @return view with recipe list.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Inflate view with layout.
         final View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
         Context context = view.getContext();
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-
-            recyclerView = (RecyclerView) view;
-        } else {
-            recyclerView = view.findViewById(R.id.recipe_list);
-        }
+        // Get recycler view and bind adapter to it.
+        recyclerView = view.findViewById(R.id.recipe_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.edit_fab);
+        // Get FAB and bind onclick handler.
+        FloatingActionButton fab = view.findViewById(R.id.edit_fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // When FAB is pressed, run the add recipe method.
                 addRecipe(view);
             }
         });
 
+        // Populate the list with items.
         refreshRecipes(view);
-        adapter.notifyDataSetChanged();
-
+        // Bind touch helper.
         attachItemTouchHelper();
-
         return view;
     }
 
+    /**
+     * Attaches touch helper to recycler view, allowing drag/drop movement.
+     */
     void attachItemTouchHelper() {
-        // Extend the Callback class
+        // Extend the callback class.
         ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
             // When an item is dragged and dropped.
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -113,15 +101,13 @@ public class AllRecipesFragment extends Fragment {
                 return true;
             }
 
+            // No swiping logic required.
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                //TODO
-            }
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {}
 
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
-
                 refreshRecipes(null);
             }
 
@@ -131,30 +117,43 @@ public class AllRecipesFragment extends Fragment {
                         ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
             }
         };
-        // Create an `ItemTouchHelper` and attach it to the `RecyclerView`
+
+        // Create an 'ItemTouchHelper' and attach it to the 'RecyclerView'
         ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
         ith.attachToRecyclerView(recyclerView);
     }
 
+    /**
+     * Refreshes the list of recipes.
+     */
     void refreshRecipes(View view) {
+        // Empty recipe list.
         recipeList.clear();
-        // Reset ordering to start at 0.
+        // Get list of Recipes.
         ArrayList<Recipe> rList = Recipe.getRecipeList(DBHelper.FILTER.ALL);
+        // Reset ordering to start at 0.
         for (int i = 0; i < rList.size(); i++) {
             rList.get(i).setPosition(i);
         }
-
+        // Add newly ordered list to the list bound to the adapter.
         recipeList.addAll(rList);
+        // Update the adapter.
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Creates popup for entering new recipe information.
+     */
     public void addRecipe(View view) {
+        // Open popup dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Enter Recipe Title");
 
+        // Text input field.
         final EditText input = new EditText(getContext());
         builder.setView(input);
 
+        // Bind 'add' button to create the new recipe and refresh the screen.
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -162,7 +161,7 @@ public class AllRecipesFragment extends Fragment {
                 refreshRecipes(null);
             }
         });
-
+        // Bind the cancel button to cancel the dialog.
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
