@@ -262,6 +262,14 @@ public class TimerService extends Service {
 
     void playPause() {
         paused = !paused;
+        if (paused) {
+            controlsSmall.setImageViewResource(R.id.play_pause, R.drawable.ic_baseline_play_arrow_24px);
+            controlsBig.setImageViewResource(R.id.play_pause, R.drawable.ic_baseline_play_arrow_24px);
+        }
+        else {
+            controlsSmall.setImageViewResource(R.id.play_pause, R.drawable.ic_baseline_pause_24px);
+            controlsBig.setImageViewResource(R.id.play_pause, R.drawable.ic_baseline_pause_24px);
+        }
     }
 
     void nextStep() {
