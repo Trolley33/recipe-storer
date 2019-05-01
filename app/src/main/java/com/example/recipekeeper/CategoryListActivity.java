@@ -19,7 +19,6 @@ import java.util.List;
 public class CategoryListActivity extends AppCompatActivity {
     Category selectedCategory;
     Toolbar toolbar;
-    private RecyclerView recyclerView;
     private List<Recipe> recipeList;
     private RecipeAdapter adapter;
 
@@ -51,7 +50,7 @@ public class CategoryListActivity extends AppCompatActivity {
         adapter = new RecipeAdapter(recipeList);
 
         // Get recycler view and bind adapter to it.
-        recyclerView = findViewById(R.id.recipe_list);
+        RecyclerView recyclerView = findViewById(R.id.recipe_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 

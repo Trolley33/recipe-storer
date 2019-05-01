@@ -53,7 +53,7 @@ public class AllRecipesFragment extends Fragment {
      * @return view with recipe list.
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate view with layout.
         final View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
@@ -89,7 +89,7 @@ public class AllRecipesFragment extends Fragment {
         // Extend the callback class.
         ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
             // When an item is dragged and dropped.
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            public boolean onMove(@NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 // Swap dragged item and target item.
                 recipeList.get(viewHolder.getAdapterPosition()).setPosition(target.getAdapterPosition());
                 recipeList.get(target.getAdapterPosition()).setPosition(viewHolder.getAdapterPosition());
@@ -106,13 +106,13 @@ public class AllRecipesFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {}
 
             @Override
-            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
                 refreshRecipes(null);
             }
 
             @Override
-            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
                         ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
             }

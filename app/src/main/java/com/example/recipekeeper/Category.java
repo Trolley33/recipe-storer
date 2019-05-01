@@ -19,7 +19,7 @@ public class Category {
      * Adds new category to the database.
      * @param name of new category.
      */
-    public static void addNew(String name) {
+    static void addNew(String name) {
         db.createNewCategory(name);
     }
 
@@ -27,7 +27,7 @@ public class Category {
      * Retrieves list of all categories from database.
      * @return {@link ArrayList<Category>} of categories.
      */
-    public static ArrayList<Category> getCategoryList() {
+    static ArrayList<Category> getCategoryList() {
         ArrayList<Category> categories = new ArrayList<>();
 
         // Retrieve cursor containing all categories from DBHelper.
@@ -57,7 +57,7 @@ public class Category {
      * @param _id of category.
      * @return {@link Category}
      */
-    public static Category getFromID(int _id) {
+    static Category getFromID(int _id) {
         // Loop over each category until one with ID is found.
         for (Category c : getCategoryList()) {
             if (c.getID() == _id) {
@@ -90,7 +90,7 @@ public class Category {
      * Get list of recipes that contain this category.
      * @return {@link ArrayList<Recipe>} that have this category.
      */
-    public ArrayList<Recipe> getRecipeList() {
+    ArrayList<Recipe> getRecipeList() {
         // Retrieve cursor of all (Category,Recipe) pairs which have this category.
         Cursor res = db.getCategoryRecipeList(getID());
         ArrayList<Recipe> output = new ArrayList<>();
@@ -120,14 +120,14 @@ public class Category {
      * Get number of recipes in this category.
      * @return {@link Integer} number of recipes in this category.
      */
-    public int getRecipeCount() {
+    int getRecipeCount() {
         return getRecipeList().size();
     }
 
     /**
      * Update database side information about this category.
      */
-    void updateCategory() {
+    private void updateCategory() {
         db.updateCategory(getID(), getName());
     }
 

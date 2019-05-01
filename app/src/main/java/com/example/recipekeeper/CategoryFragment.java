@@ -3,6 +3,7 @@ package com.example.recipekeeper;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -21,7 +22,6 @@ import java.util.List;
  */
 public class CategoryFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private List<Category> categoryList;
     private CategoryAdapter adapter;
 
@@ -50,14 +50,14 @@ public class CategoryFragment extends Fragment {
      * @return view with category list.
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate view with layout.
         View view = inflater.inflate(R.layout.fragment_category_list, container, false);
         Context context = view.getContext();
 
         // Get recycler view and bind adapter to it.
-        recyclerView = view.findViewById(R.id.recipe_list);
+        RecyclerView recyclerView = view.findViewById(R.id.recipe_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
