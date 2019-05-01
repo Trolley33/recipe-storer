@@ -23,39 +23,53 @@ public class CategoryListActivity extends AppCompatActivity {
     private List<Recipe> recipeList;
     private RecipeAdapter adapter;
 
+    /**
+     * When activity is created.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Set content to custom layout.
         setContentView(R.layout.activity_category_viewer);
 
+        // Retrieve selected category ID from intent.
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getExtras().get(HomeActivity.CATEGORY_ID_MESSAGE).toString());
 
-
+        // Get Category object from selected ID.
         selectedCategory = Category.getFromID(id);
 
-        // Setup action bar
+        // Setup custom action bar.
         toolbar = findViewById(R.id.action_bar);
         toolbar.setTitle(selectedCategory.getName());
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Instantiate member variables.
         recipeList = new ArrayList<>();
         adapter = new RecipeAdapter(recipeList);
 
+        // Get recycler view and bind adapter to it.
         recyclerView = findViewById(R.id.recipe_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        // Update screen.
         refreshRecipes(null);
     }
 
+    /**
+     * Refreshes the list of recipes for this category.
+     * @param view
+     */
     void refreshRecipes(View view) {
+        // Empty recipe list.
         recipeList.clear();
+        // Add all recipes in this category to recipe list.
         ArrayList<Recipe> rList = selectedCategory.getRecipeList();
         recipeList.addAll(rList);
-
+        // Update adapter.
         adapter.notifyDataSetChanged();
     }
 
@@ -90,14 +104,20 @@ public class CategoryListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Creates popup for entering new category name.
+     */
     void editPressed() {
+        // Open popup dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Category Name");
 
+        // Text input field, set to current category's name.
         final EditText input = new EditText(this);
         input.setText(selectedCategory.getName());
         builder.setView(input);
 
+        // Bind 'done' button to update categories name, and update toolbar text.
         builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -106,6 +126,7 @@ public class CategoryListActivity extends AppCompatActivity {
             }
         });
 
+        // Bind the cancel button to cancel the dialog.
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -116,12 +137,17 @@ public class CategoryListActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Creates popup for confirming deletion.
+     */
     void deletePressed() {
+        // Open popup dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle("Really Delete Category?");
         builder.setMessage("This cannot be undone.");
 
+        // Bind 'delete' button to remove category from database, and switch back to the main activity.
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -131,20 +157,13 @@ public class CategoryListActivity extends AppCompatActivity {
             }
         });
 
+        // Bind the cancel button to cancel the dialog.
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
-        builder.show();
-    }
-
-    void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
         builder.show();
     }
 }
