@@ -17,37 +17,33 @@ import android.view.MenuItem;
 
 public class HomeActivity extends AppCompatActivity {
 
+    // Extra string values
     public static final String RECIPE_ID_MESSAGE = "com.example.recipekeeper.extra.RECIPE_ID";
     public static final String SEARCH_MESSAGE = "com.example.recipekeeper.extra.SEARCH_STRING";
-
     public static final String CATEGORY_ID_MESSAGE = "com.example.recipekeeper.extra.CATEGORY_ID";
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
-     * The {@link ViewPager} that will host the section contents.
+     * When activity is created.
      */
-    private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Set content to custom layout.
         setContentView(R.layout.activity_home);
 
-        // Setup action bar
+        // Setup custom action bar.
         Toolbar toolbar = findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        // Create the adapter that will return a fragment for each of the three primary sections of the activity.
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        // Get viewpager object, and bind pager adapter.
+        ViewPager mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
+        // Get tablayout and add listeners.
+        TabLayout tabLayout = findViewById(R.id.tabs);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
@@ -63,16 +59,30 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
 
+        // Get search view from action bar menu.
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+
+        // Add listeners for searching.
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            /**
+             * When search is triggered.
+             * @param term to search for.
+             */
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String term) {
+                // Create intent to go to search activity.
                 Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-                intent.putExtra(SEARCH_MESSAGE, s);
+                // Add the search string as an extra.
+                intent.putExtra(SEARCH_MESSAGE, term);
+                // Open search activity.
                 startActivity(intent);
                 return false;
             }
 
+            /**
+             * When the query is changed (by typing).
+             * Not enabled.
+             */
             @Override
             public boolean onQueryTextChange(String s) {
                 return false;
@@ -91,10 +101,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.search:
-//                Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
-//                searchPressed();
-//                break;
+            // When help icon pressed, run help function.
             case R.id.help:
                 helpPressed();
                 break;
@@ -103,22 +110,14 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void searchPressed() {
-        showMessage("TODO", "Run search function.");
-    }
-
+    /**
+     * Called when help button is pressed.
+     */
     void helpPressed() {
+        // Create intent to go to user guide activity.
         Intent intent = new Intent(this, UserGuideActivity.class);
-
+        // Open user guide.
         this.startActivity(intent);
-    }
-
-    void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
     }
 
     /**
@@ -127,14 +126,18 @@ public class HomeActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
+        /**
+         * Called to instantiate fragment for given page.
+         * @param position of tab to instantiate.
+         * @return fragment object.
+         */
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            // Return fragement based on tab position.
             switch (position) {
                 case 0:
                     return new AllRecipesFragment();
@@ -146,9 +149,12 @@ public class HomeActivity extends AppCompatActivity {
             return null;
         }
 
+        /**
+         * Number of tabs to show.
+         * @return number of fragments.
+         */
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
     }
