@@ -16,7 +16,8 @@ public class Ingredient {
     private String amount;
     private int position;
 
-    public Ingredient(int _id, int _recipe_id, String _desc, String _amount, int _pos) {
+    private Ingredient(int _id, int _recipe_id, String _desc, String _amount, int _pos) {
+        // Set member values on instantiation.
         id = _id;
         recipe_id = _recipe_id;
         description = _desc;
@@ -24,42 +25,67 @@ public class Ingredient {
         position = _pos;
     }
 
-    public static void addIngredient(int recipe_id, String desc, String amount) {
+    /**
+     * Adds new ingredient to database.
+     * @param recipe_id of recipe to add ingredient to.
+     * @param desc of ingredient.
+     * @param amount of ingredient.
+     */
+    static void addIngredient(int recipe_id, String desc, String amount) {
+        // Create URI for content provider.
         Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
 
+        // Get content resolver.
         ContentResolver resolver = context.getContentResolver();
+
+        // Insert values into object.
         ContentValues values = new ContentValues();
         values.put("RECIPE_ID", recipe_id);
         values.put("DESCRIPTION", desc);
         values.put("AMOUNT", amount);
 
+        // Get last position of ingredient list.
         int pos = getIngredientList(recipe_id).size() + 1;
         values.put("POSITION", pos);
 
+        // Insert data into database.
         resolver.insert(uri, values);
     }
 
-    public static ArrayList<Ingredient> getIngredientList(int recipe_id) {
+    /**
+     * Retrieves list of all ingredients for a given recipe from database.
+     * @param recipe_id of recipe to get ingredients from.
+     * @return {@link ArrayList<Ingredient>} of ingredients.
+     */
+    static ArrayList<Ingredient> getIngredientList(int recipe_id) {
         ArrayList<Ingredient> ingredients = new ArrayList<>();
 
+        // Create URI for content provider.
         Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
 
+        // Get content resolver.
         ContentResolver resolver = context.getContentResolver();
 
+        // Set selection query.
         String selection = "RECIPE_ID=?";
         String[] selectionArgs = {Integer.toString(recipe_id)};
 
 
+        // Retrieve cursor containing all matching ingredients from resolver.
         Cursor res = resolver.query(uri, null, selection, selectionArgs, null);
 
+        // Query failed, return blank list.
         if (res == null) {
             return ingredients;
         }
+        // Query empty, return blank list.
         if (res.getCount() == 0) {
             return ingredients;
         }
 
+        // Loop over each row.
         while (res.moveToNext()) {
+            // Add ingredient object to list.
             int _id = res.getInt(0);
             int _recipe_id = res.getInt(1);
             String _desc = res.getString(2);
@@ -69,78 +95,86 @@ public class Ingredient {
             ingredients.add(new Ingredient(_id, _recipe_id, _desc, _amount, _position));
         }
 
+        res.close();
 
+        // Return list.
         return ingredients;
-    }
-
-    public static Ingredient getFromID(int _id, int recipe_id) {
-        for (Ingredient i : getIngredientList(recipe_id)) {
-            if (i.getID() == _id) {
-                return i;
-            }
-        }
-        return null;
     }
 
     public int getID() {
         return id;
     }
 
-    public int getRecipeID() {
+    private int getRecipeID() {
         return recipe_id;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 
-    public void setDescription(String desc) {
+    void setDescription(String desc) {
         description = desc;
         updateIngredient();
     }
 
-    public String getAmount() {
+    String getAmount() {
         return amount;
     }
 
-    public void setAmount(String _amount) {
+    void setAmount(String _amount) {
         amount = _amount;
         updateIngredient();
     }
 
-    public int getPosition() {
+    private int getPosition() {
         return position;
     }
 
-    public void setPosition(int _pos) {
+    void setPosition(int _pos) {
         position = _pos;
         updateIngredient();
     }
 
-    void updateIngredient() {
+    /**
+     * Updates ingredient in database with current values.
+     */
+    private void updateIngredient() {
+        // Create URI for content provider.
         Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
 
+        // Get content resolver.
         ContentResolver resolver = context.getContentResolver();
+        // Add new values to object.
         ContentValues values = new ContentValues();
         values.put("RECIPE_ID", getRecipeID());
         values.put("DESCRIPTION", getDescription());
         values.put("AMOUNT", getAmount());
         values.put("POSITION", getPosition());
 
+        // Set update parameters.
         String selection = "ID=?";
         String[] selectionArgs = {Integer.toString(getID())};
 
+        // Update row with new information.
         resolver.update(uri, values, selection, selectionArgs);
     }
 
+    /**
+     * Deletes ingredient from database.
+     */
     public void delete() {
+        // Create URI for content provider.
         Uri uri = Uri.parse("content://com.example.recipekeeper.own.PROVIDER");
 
+        // Get content resolver.
         ContentResolver resolver = context.getContentResolver();
 
+        // Set deletion parameters.
         String selection = "ID=?";
         String[] selectionArgs = {Integer.toString(getID())};
 
+        // Delete row from database.
         resolver.delete(uri, selection, selectionArgs);
     }
 }
