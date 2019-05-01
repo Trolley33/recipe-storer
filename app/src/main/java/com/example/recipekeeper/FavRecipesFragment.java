@@ -17,17 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * <p>
- * interface.
+ * A fragment for listing favourite recipes.
  */
 public class FavRecipesFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
 
     private RecyclerView recyclerView;
     private List<Recipe> recipeList;
@@ -39,73 +32,75 @@ public class FavRecipesFragment extends Fragment {
      */
     public FavRecipesFragment() {
     }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static FavRecipesFragment newInstance(int columnCount) {
-        FavRecipesFragment fragment = new FavRecipesFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    /**
+     * Called when fragment is created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Instantiate method variables.
         recipeList = new ArrayList<>();
         adapter = new RecipeAdapter(recipeList);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
+    /**
+     * Called when view is created.
+     * @return view with recipe list.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Inflate view with layout.
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
         Context context = view.getContext();
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-
-            recyclerView = (RecyclerView) view;
-        } else {
-            recyclerView = view.findViewById(R.id.recipe_list);
-        }
+        // Get recycler view and bind adapter to it.
+        recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.edit_fab);
+        // Get FAB and bind onclick handler.
+        FloatingActionButton fab = view.findViewById(R.id.edit_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // When FAB is pressed, run the add recipe method.
                 addRecipe(view);
             }
         });
 
+        // Populate the list with items.
         refreshRecipes(view);
-        adapter.notifyDataSetChanged();
-
         return view;
     }
 
+    /**
+     * Refreshes the list of recipes.
+     */
     void refreshRecipes(View view) {
+        // Empty recipe list.
         recipeList.clear();
+        // Get list of Recipes tagged as favourites..
         recipeList.addAll(Recipe.getRecipeList(DBHelper.FILTER.FAVOURITES));
+        // Update the adapter.
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Creates popup for entering new recipe information.
+     */
     public void addRecipe(View view) {
+        // Open popup dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Enter Recipe Title");
 
+        // Text input field.
         final EditText input = new EditText(getContext());
         builder.setView(input);
 
+        // Bind 'add' button to create the new favourite recipe and refresh the screen.
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -113,7 +108,7 @@ public class FavRecipesFragment extends Fragment {
                 refreshRecipes(null);
             }
         });
-
+        // Bind the cancel button to cancel the dialog.
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
