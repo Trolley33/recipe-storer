@@ -17,17 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * <p>
- * interface.
+ * A fragment for listing categories.
  */
 public class CategoryFragment extends Fragment {
-
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
 
     private RecyclerView recyclerView;
     private List<Category> categoryList;
@@ -40,46 +32,38 @@ public class CategoryFragment extends Fragment {
     public CategoryFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static CategoryFragment newInstance(int columnCount) {
-        CategoryFragment fragment = new CategoryFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    /**
+     * Called when fragment is created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Instantiate method variables.
         categoryList = new ArrayList<>();
         adapter = new CategoryAdapter(categoryList);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
+    /**
+     * When the view is created.
+     * @return view with category list.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Inflate view with layout.
         View view = inflater.inflate(R.layout.fragment_category_list, container, false);
         Context context = view.getContext();
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-
-            recyclerView = (RecyclerView) view;
-        } else {
-            recyclerView = view.findViewById(R.id.recipe_list);
-        }
+        // Get recycler view and bind adapter to it.
+        recyclerView = view.findViewById(R.id.recipe_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.edit_fab);
+        // Get FAB and bind onclick handler.
+        FloatingActionButton fab = view.findViewById(R.id.edit_fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,25 +71,36 @@ public class CategoryFragment extends Fragment {
             }
         });
 
+        // Populate list with items.
         refreshCategories(view);
-        adapter.notifyDataSetChanged();
-
         return view;
     }
 
+    /**
+     * Refreshes the list of categories.
+     */
     void refreshCategories(View view) {
+        // Empty category list.
         categoryList.clear();
+        // Get list of Categories
         categoryList.addAll(Category.getCategoryList());
+        // Update adapter with new data.
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Creates popup for entering new category information.
+     */
     public void addCategory(View view) {
+        // Open popup dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Enter Category Title");
 
+        // Text input field.
         final EditText input = new EditText(getContext());
         builder.setView(input);
 
+        // Bind 'add' button to create new category and refresh the screen.
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -114,6 +109,7 @@ public class CategoryFragment extends Fragment {
             }
         });
 
+        // Bind the cancel button to cancel the dialog.
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
