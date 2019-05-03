@@ -10,25 +10,29 @@ import android.webkit.WebViewClient;
 
 public class UserGuideActivity extends AppCompatActivity {
 
-    WebView webView;
-
+    /**
+     * When activity is created.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Set content to custom layout.
         setContentView(R.layout.activity_user_guide);
 
-        // Setup action bar
+        // Setup custom action bar.
         Toolbar toolbar = findViewById(R.id.action_bar);
         toolbar.setTitle("User Guide");
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        webView = (WebView) findViewById(R.id.webview);
+        // Retrieve web view and enable JavaScript (for responsiveness).
+        WebView webView = findViewById(R.id.webview);
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
 
+        // Load local index.html file as website.
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl("file:///android_asset/index.html");
 
