@@ -13,7 +13,7 @@ public class Method {
     private double time;
 
     public Method(int _id, int _recipe_id, int _pos, String _step, double _time) {
-        // Set id and category name on instantiation.
+        // Set member values on instantiation.
         id = _id;
         recipe_id = _recipe_id;
         position = _pos;
