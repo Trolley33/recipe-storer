@@ -10,15 +10,20 @@ import android.view.MenuItem;
 public class SearchActivity extends AppCompatActivity {
     private String term;
 
+    /**
+     * When activity is created.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Set content to custom layout.
+        setContentView(R.layout.activity_search);
 
+        // Retrieve input search term from intent.
         Intent intent = getIntent();
         term = intent.getExtras().get(HomeActivity.SEARCH_MESSAGE).toString();
 
-        setContentView(R.layout.activity_search);
-        // Setup action bar
+        // Setup custom action bar.
         Toolbar toolbar = findViewById(R.id.action_bar);
         toolbar.setTitle(String.format("Searching for: %s", term));
         setSupportActionBar(toolbar);
