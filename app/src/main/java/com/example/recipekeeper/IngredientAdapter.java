@@ -146,7 +146,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
     /**
      * Number of items this adapter will display.
-     * @return size of category list.
+     * @return size of ingredient list.
      */
     @Override
     public int getItemCount() {
