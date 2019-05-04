@@ -133,7 +133,7 @@ public class RecipeIngredientsFragment extends Fragment {
     void refreshIngredients(View view) {
         // Empty ingredient list.
         ingredientsList.clear();
-        // Add list to adapter.
+        // Add list of ingredients for this recipe to adapter.
         ingredientsList.addAll(Ingredient.getIngredientList(selectedRecipe.getID()));
         // Update the adapter.
         adapter.notifyDataSetChanged();
