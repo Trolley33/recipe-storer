@@ -57,7 +57,7 @@ public class FavRecipesFragment extends Fragment {
         Context context = view.getContext();
 
         // Get recycler view and bind adapter to it.
-        RecyclerView recyclerView = (RecyclerView) view;
+        RecyclerView recyclerView = view.findViewById(R.id.recipe_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
